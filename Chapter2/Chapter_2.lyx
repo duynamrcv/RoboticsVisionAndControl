@@ -1,0 +1,1332 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 2: Representing Position and Orientation
+\end_layout
+
+\begin_layout Standard
++ The pose of the coordinate frame is denoted by the symbol 
+\begin_inset Formula $\xi$
+\end_inset
+
+.
+ Fig 2.1 shows two frames {A} and {B} and the
+\series bold
+\emph on
+ relative pose
+\series default
+\emph default
+ 
+\begin_inset Formula $\xi_{B}^{A}$
+\end_inset
+
+which describes {B} with respect to {A}.
+ The point P can be described with respect to either coordinate frame by
+ the vector 
+\begin_inset Formula $\boldsymbol{p}^{A}$
+\end_inset
+
+ or 
+\begin_inset Formula $\boldsymbol{p}^{B}$
+\end_inset
+
+ respectively.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{p}^{A}=\xi_{B}^{A}\bullet\boldsymbol{p}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example _1.png
+	lyxscale 75
+	BoundingBox 0bp 0bp 300bp 290bp
+
+\end_inset
+
+ Fig 2.1
+\end_layout
+
+\begin_layout Standard
++ An important characteristic of 
+\series bold
+\emph on
+relative poses
+\series default
+\emph default
+ is that they can be 
+\series bold
+\emph on
+composed
+\series default
+\emph default
+ or 
+\series bold
+\emph on
+compounded
+\series default
+\emph default
+.
+ Consider the case shown in Fig 2.2.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{C}^{A}=\xi_{B}^{A}\oplus\xi_{C}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example _2.png
+	lyxscale 75
+
+\end_inset
+
+Fig 2.2
+\end_layout
+
+\begin_layout Standard
+For this case, the point P can be described by 
+\begin_inset Formula $\boldsymbol{p}^{A}=(\xi_{B}^{A}\oplus\xi_{C}^{B})\bullet\boldsymbol{p}^{C}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- There are just a few algebraic rules
+\emph default
+, 
+\emph on
+where 0 represents a zero relative pose.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi\oplus0=\xi;$
+\end_inset
+
+ 
+\begin_inset Formula $\xi\ominus0=\xi;$
+\end_inset
+
+ 
+\begin_inset Formula $\xi\ominus\xi=0;$
+\end_inset
+
+ 
+\begin_inset Formula $\ominus\xi\oplus\xi=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+- 
+\emph on
+A pose has an inverse, which is represented graphically by an arrow from
+ {Y} to {X}.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ominus\xi_{Y}^{X}=\xi_{X}^{Y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- Relative poses can also be composed or compounded.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\xi_{Y}^{X}\oplus\xi_{Z}^{Y}=\xi_{Z}^{X}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+- 
+\emph on
+Importantalgebraic rules for poses are different to normal algebra and that
+ composition is not commutative.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{1}\oplus\xi_{2}\ne\xi_{2}\oplus\xi_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Exception: 
+\begin_inset Formula $\xi_{1}\oplus\xi_{2}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+-
+\emph on
+ A relative pose can transform a point expressed as a vector relative to
+ one frame to a vector relative to another.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{p}^{X}=\xi_{Y}^{X}\bullet\boldsymbol{p}^{Y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.1.
+ Working in Two Dimentions (2D), plane
+\end_layout
+
+\begin_layout Standard
++ Unit-vector parallel to the axes are denoted 
+\begin_inset Formula $\boldsymbol{\hat{\boldsymbol{x}}}$
+\end_inset
+
+and 
+\series bold
+
+\begin_inset Formula $\boldsymbol{\hat{\boldsymbol{y}}}$
+\end_inset
+
+
+\series default
+.
+ A point is represented by its z- and y-coordinates 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{p=}x\boldsymbol{\hat{x}}+y\boldsymbol{\hat{y}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Fig 2.3: the origin of {B} has been displaced by the vector 
+\begin_inset Formula $\boldsymbol{t}=(x,y)$
+\end_inset
+
+ and thenn rotated counter-clockwise by an angle 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 2.3
+\end_layout
+
+\begin_layout Standard
++ A relative pose is the 3-vector 
+\begin_inset Formula $\xi_{B}^{A}\sim(x,y,\theta)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Because 
+\begin_inset Formula $(x_{1},y_{1},\theta_{1})\oplus(x_{2},y_{2},\theta_{2})$
+\end_inset
+
+ is a complex trigonometric function of both poses, we will consider the
+ problem in two parts: 
+\series bold
+\emph on
+rotation
+\series default
+\emph default
+ and the 
+\series bold
+\emph on
+translation
+\series default
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.1.1.
+ Orientation in 2-Dimensions
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.1.1.1 Orthonormal Rotation Matrix
+\end_layout
+
+\begin_layout Standard
+Point P with respect to each of the coordinate frames shown in Fig 2.4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 2.4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+x^{V}\\
+y^{V}
+\end{array}\right)=\left(\begin{array}{cc}
+\cos\theta & -\sin\theta\\
+\sin\theta & \cos\theta
+\end{array}\right)\left(\begin{array}{c}
+x^{B}\\
+y^{B}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which describes how points are transfomed from frame {B} to frame {V}.
+ The rotation matrix is denoted 
+\begin_inset Formula $\boldsymbol{R}_{B}^{V}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+x^{V}\\
+y^{V}
+\end{array}\right)=\boldsymbol{R}_{B}^{V}\left(\begin{array}{c}
+x^{B}\\
+y^{B}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\boldsymbol{R}_{B}^{V}=\left(\begin{array}{cc}
+\cos\theta & -\sin\theta\\
+\sin\theta & \cos\theta
+\end{array}\right)$
+\end_inset
+
+is a 2-dimensional rotation matrix with some properties:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- It is orthonormal (orthogonal) since each of its columns is a unit vector
+ and the columns are orthogonal.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- Its determinant is +1, so,
+\emph default
+ 
+\begin_inset Formula $||\boldsymbol{p}^{Y}||=||\boldsymbol{p}^{X}||,\forall\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+- 
+\emph on
+The inverse is the same as the transpose, that is
+\emph default
+ 
+\begin_inset Formula $\boldsymbol{R}^{-1}=\boldsymbol{R}^{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.1.1.2.
+ Matrix Exponential
+\end_layout
+
+\begin_layout Standard
++ In 2D, the skew-symmetric matrix is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left[\boldsymbol{w}\right]_{\times}=\left(\begin{array}{cc}
+0 & -\omega\\
+\omega & 0
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.1.2.
+ Pose in 2-dimensions
+\end_layout
+
+\begin_layout Standard
+The translation between the origins of the frames shown in Fig 2.3, where
+ 
+\begin_inset Formula $\boldsymbol{t}=(x,y)$
+\end_inset
+
+ is the translation frame and the orientation is 
+\begin_inset Formula $\boldsymbol{R}_{B}^{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+x^{A}\\
+y^{A}\\
+1
+\end{array}\right)=\left(\begin{array}{cc}
+\boldsymbol{R}_{B}^{A} & \boldsymbol{t}\\
+0^{T} & 1
+\end{array}\right)\left(\begin{array}{c}
+x^{B}\\
+y^{B}\\
+1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- 
+\emph default
+
+\begin_inset Formula $T=\left(\begin{array}{ccc}
+\cos\theta & -\sin\theta & x\\
+\sin\theta & \cos\theta & y\\
+0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- A concrete representation of relative pose 
+\begin_inset Formula $\xi$
+\end_inset
+
+ is 
+\begin_inset Formula $\xi\sim\boldsymbol{T}\in\boldsymbol{SE}(2)$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{T_{1}}\oplus\boldsymbol{T_{2}}\mapsto\boldsymbol{T_{1}T_{2}}$
+\end_inset
+
+which is standard matrix multiplication
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- 
+\emph default
+
+\begin_inset Formula $\boldsymbol{T_{1}T_{2}=}\left(\begin{array}{cc}
+\boldsymbol{R_{1}} & \boldsymbol{t_{1}}\\
+0^{T} & 1
+\end{array}\right)\left(\begin{array}{cc}
+\boldsymbol{R_{2}} & \boldsymbol{t_{2}}\\
+0^{T} & 1
+\end{array}\right)=\left(\begin{array}{cc}
+\boldsymbol{R_{1}R_{2}} & \boldsymbol{t_{1}+R_{1}t_{2}}\\
+0^{T} & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- 
+\emph default
+
+\begin_inset Formula $\ominus\boldsymbol{T}\mapsto\boldsymbol{T}^{-1}=\left(\begin{array}{cc}
+\boldsymbol{R} & \boldsymbol{t}\\
+0^{T} & 1
+\end{array}\right)^{-1}=\left(\begin{array}{cc}
+\boldsymbol{R}^{T} & \boldsymbol{-R}^{T}\boldsymbol{t}\\
+0^{T} & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.
+ Working in 3-Dimensions
+\end_layout
+
+\begin_layout Standard
++ Unit vectors parallel to the axes and denoted 
+\begin_inset Formula $\boldsymbol{\hat{x},\hat{y}}$
+\end_inset
+
+and 
+\begin_inset Formula $\boldsymbol{\hat{z}}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\hat{z}}=\boldsymbol{\hat{x}}\times\boldsymbol{\hat{y}},\boldsymbol{\hat{x}}=\boldsymbol{\hat{y}}\times\boldsymbol{\hat{z}},\boldsymbol{\hat{y}}=\boldsymbol{\hat{z}}\times\boldsymbol{\hat{x}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ A point 
+\series bold
+
+\begin_inset Formula $\boldsymbol{P}$
+\end_inset
+
+
+\series default
+is represented by its x-, y- and z-coordinates (x, y, z):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{p}=x\boldsymbol{\hat{x}}+y\boldsymbol{\hat{y}+z\boldsymbol{\hat{z}}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_5.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 2.5
+\end_layout
+
+\begin_layout Standard
+Fig 2.5 shows that the origin {B} has been displaced bt vector 
+\begin_inset Formula $\boldsymbol{t}=(x,y,z)$
+\end_inset
+
+ and then rotated in some complex fashion
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.1.
+ Orientation in 3-Dimensions
+\end_layout
+
+\begin_layout Standard
++ In 3-Dimensions rotation is not commutative - the order in which rotations
+ are applied makes a difference to the result.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.1.1 Orthonormal Rotation Matrix
+\end_layout
+
+\begin_layout Standard
++ 3
+\begin_inset Formula $\times$
+\end_inset
+
+3 
+\series bold
+\emph on
+orthonormal matrix
+\series default
+\emph default
+
+\begin_inset Formula $\boldsymbol{R}_{B}^{A}$
+\end_inset
+
+ which transforms the description of a vector defined with respect to frame
+ {B} to a vector with respect to {A}.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+x^{A}\\
+y^{A}\\
+z^{A}
+\end{array}\right)=\boldsymbol{R}_{B}^{A}\left(\begin{array}{c}
+x^{B}\\
+y^{B}\\
+z^{B}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+A 3-dimensions rotation matrix 
+\begin_inset Formula $\boldsymbol{R}_{Y}^{X}$
+\end_inset
+
+has some properties:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- It is orthonormal.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- Its determinant is +1, 
+\begin_inset Formula $\left\Vert \boldsymbol{p}^{Y}\right\Vert =\left\Vert \boldsymbol{p}^{X}\right\Vert \forall\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- The inverse is the same as the transpose, 
+\begin_inset Formula $\boldsymbol{R}^{-1}=\boldsymbol{R}^{T}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
++ The orthonormal rotation matrices for rotation of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ about x-, y-, z-axes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $R_{X}=\left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & \cos\theta & -\sin\theta\\
+0 & \sin\theta & \cos\theta
+\end{array}\right);R_{Y}=\left(\begin{array}{ccc}
+\cos\theta & 0 & \sin\theta\\
+0 & 1 & 0\\
+-\sin\theta & 0 & \cos\theta
+\end{array}\right);R_{Z}=\left(\begin{array}{ccc}
+\cos\theta & -\sin\theta & 0\\
+\sin\theta & \cos\theta & 0\\
+0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.1.2.
+ Three-Angle Representations
+\end_layout
+
+\begin_layout Standard
++ There are two classes of rotations sequence: Eulerian and Cardanian.
+\end_layout
+
+\begin_layout Standard
++ The Eulerian type is characterized by rotations about one particular axis:
+ XYX, XZX, YXY, YZY, ZXZ, ZYZ.
+\end_layout
+
+\begin_layout Standard
++ The Cardanian type is characterized by rotations about all three axes:
+ XYZ, XZY, YZX, YXZ, ZXY, ZYX.
+\end_layout
+
+\begin_layout Standard
++ The ZYZ sequence
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}=\boldsymbol{R}_{Z}(\phi)\boldsymbol{R}_{Y}(\theta)\boldsymbol{R}_{Z}(\psi)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The XYZ sequence
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}=\boldsymbol{R}_{X}(\theta_{y})\boldsymbol{R}_{Y}(\theta_{p})\boldsymbol{R}_{Z}(\theta_{r})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.1.3.
+ Two Vector Representation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_6.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 2.6
+\end_layout
+
+\begin_layout Standard
++ A coordinate frame {E} shown in Fig 2.6.
+ The z-axis is called 
+\series bold
+\emph on
+approach vector
+\series default
+\emph default
+ and denoted 
+\series bold
+
+\begin_inset Formula $\boldsymbol{\hat{a}}=(a_{x},a_{y},a_{z})$
+\end_inset
+
+
+\series default
+.
+ An orthogonal vector that provides orientation is called the 
+\series bold
+\emph on
+orientation vector 
+\series default
+\emph default
+and denoted 
+\begin_inset Formula $\boldsymbol{\hat{o}}=(o_{x},o_{y},o_{z}).$
+\end_inset
+
+These two unit vectors are sufficient to the rotation mmatrix:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}=\left(\begin{array}{ccc}
+n_{x} & o_{x} & a_{x}\\
+n_{y} & o_{y} & a_{y}\\
+n_{z} & o_{z} & a_{z}
+\end{array}\right)$
+\end_inset
+
+where 
+\begin_inset Formula $\boldsymbol{\hat{n}}=\boldsymbol{\hat{o}}\times\boldsymbol{\hat{a}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.1.2.4.
+ Rotation about an Arbitrary Vector
+\end_layout
+
+\begin_layout Standard
++ The eigenvector 
+\begin_inset Formula $\boldsymbol{v}$
+\end_inset
+
+ and eigenvalue 
+\begin_inset Formula $\lambda$
+\end_inset
+
+: 
+\begin_inset Formula $\boldsymbol{Rv}=\lambda\boldsymbol{v}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ An orthonormal rotation matrix will always have one real eigenvalue at
+ 
+\begin_inset Formula $\lambda=1$
+\end_inset
+
+and a complex pair 
+\begin_inset Formula $\lambda=\cos\theta\pm i\sin\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The inverse problem, converting from angle and vector to a rotation matrix,
+ where 
+\begin_inset Formula $\left[\hat{v}\right]_{\times}$
+\end_inset
+
+is a skew-symmetric matrix
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}=\boldsymbol{I}_{3\times3}+\sin\theta\left[\hat{v}\right]_{\times}+(1-\cos\theta)\left[\hat{v}\right]_{\times}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.1.5.
+ Matrix Exponential
+\end_layout
+
+\begin_layout Standard
++ In 3D, the skew-symmetric matrix has the form:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left[\boldsymbol{w}\right]_{\times}=\left(\begin{array}{ccc}
+0 & -\omega_{z} & \omega_{y}\\
+\omega_{z} & 0 & -\omega_{x}\\
+-\omega_{y} & \omega_{x} & 0
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The matrix can be uesd to impliment the vector cross product 
+\begin_inset Formula $\boldsymbol{v}_{1}\times\boldsymbol{v}_{2}=\left[\boldsymbol{v}_{1}\right]_{\times}\boldsymbol{v}_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.1.7.
+ Unit Quaternions
+\end_layout
+
+\begin_layout Standard
++ The quaternion is an extension of the complex number - a hypercomplex
+ number - and is written as a scalar plus a vector
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}=\boldsymbol{s}+\boldsymbol{v}=\boldsymbol{s}+v_{1}i+v_{2}j+v_{3}k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{s}\in\mathbb{R},\boldsymbol{v}\in\mathbb{R}^{3}$
+\end_inset
+
+and the orthogonal complex numbers 
+\begin_inset Formula $i,j,k$
+\end_inset
+
+ are defined
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $i^{2}=j^{2}=k^{2}=ijk=-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+denoted 
+\begin_inset Formula $\boldsymbol{q}=s<v_{1},v_{2},v_{3}>$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Quaternion addition and subtraction performed element-wise, multiplication
+ by a scalar and multiplication
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}_{1}\circ\boldsymbol{q}_{2}=s_{1}s_{2}-v_{1}v_{2}<s_{1}v_{2}+s_{2}v_{1}+v_{1}\times v_{2}>$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Unit-quaternions denoted by 
+\begin_inset Formula $\mathring{\boldsymbol{q}}$
+\end_inset
+
+; 
+\begin_inset Formula $\left\Vert \boldsymbol{q}\right\Vert =s^{2}+v_{1}^{2}+v_{2}^{2}+v_{3}^{2}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ A rotation of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ about the unit vector 
+\begin_inset Formula $\hat{\boldsymbol{v}}$
+\end_inset
+
+which are related to the quaternion components by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathring{\boldsymbol{q}}=\cos(\theta/2)<\hat{\boldsymbol{v}}\sin(\theta/2)>$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- For the case of unit quaternions our generalized pose is a rotation 
+\begin_inset Formula $\xi\sim\mathring{q}\in\mathbb{S}^{3}$
+\end_inset
+
+and
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\mathring{\boldsymbol{q_{1}}}\oplus\mathring{\boldsymbol{q_{2}}}\mapsto\mathring{\boldsymbol{q_{1}}}\circ\mathring{\boldsymbol{q_{2}}}$
+\end_inset
+
+and 
+\begin_inset Formula $\ominus\mathring{\boldsymbol{q}}\mapsto\mathring{\boldsymbol{q}}^{-1}=s<-\boldsymbol{v}>$
+\end_inset
+
+ which is the quaternion conjugate.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- The zero rotation 
+\begin_inset Formula $0\mapsto1<0,0,0>$
+\end_inset
+
+ which is the identity quaternion.
+ A vecter 
+\begin_inset Formula $\boldsymbol{v}\in\mathbb{R}^{3}$
+\end_inset
+
+ is rotated by 
+\begin_inset Formula $\mathring{\boldsymbol{q}}\circ\boldsymbol{v}\mapsto\mathring{\boldsymbol{q}}\circ\mathring{\boldsymbol{v}}\circ\mathring{\boldsymbol{q}}^{-1}$
+\end_inset
+
+where 
+\begin_inset Formula $\mathring{\boldsymbol{v}}=0<\boldsymbol{v}>$
+\end_inset
+
+ is known as pure quaternion.
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.
+ Pose in 3-Dimensions
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.2.1.
+ Homogeneous Transformation Matrix
+\end_layout
+
+\begin_layout Standard
++ 
+\begin_inset Formula $\boldsymbol{t}\in\mathbb{R}^{3}$
+\end_inset
+
+is a vector defining the origin of frame {B} with respect to frame {A} and
+ 
+\begin_inset Formula $\boldsymbol{R}$
+\end_inset
+
+ is the 
+\begin_inset Formula $3\times3$
+\end_inset
+
+ orthonormal matrix which describes the orientation of the axes of frame
+ {B} with respect to frame {A}.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+x^{A}\\
+y^{A}\\
+z^{A}\\
+1
+\end{array}\right)=\left(\begin{array}{cc}
+\boldsymbol{R}_{B}^{A} & \boldsymbol{t}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)\left(\begin{array}{c}
+x^{B}\\
+y^{B}\\
+z^{B}\\
+1
+\end{array}\right)\sim\tilde{\boldsymbol{p}}^{A}=\left(\begin{array}{cc}
+\boldsymbol{R}_{B}^{A} & \boldsymbol{t}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)\tilde{\boldsymbol{p}}^{B}=\boldsymbol{T}_{B}^{A}\tilde{\boldsymbol{p}}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+-
+\emph on
+ A representation of relative pose is 
+\begin_inset Formula $\xi\sim\boldsymbol{T}\in\boldsymbol{SE}(3)\subset\mathbb{R}^{4\times4}$
+\end_inset
+
+and 
+\begin_inset Formula $\boldsymbol{T_{1}}\oplus\boldsymbol{T_{2}}\mapsto\boldsymbol{T_{1}T_{2}}$
+\end_inset
+
+which is standard matrix multiplication.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\boldsymbol{T_{1}T_{2}}=\left(\begin{array}{cc}
+\boldsymbol{R_{1}} & \boldsymbol{t_{1}}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)\left(\begin{array}{cc}
+\boldsymbol{R_{2}} & \boldsymbol{t_{2}}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)=\left(\begin{array}{cc}
+\boldsymbol{R_{1}R_{2}} & \boldsymbol{t_{1}}+\boldsymbol{R_{1}t_{2}}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- 
+\begin_inset Formula $\ominus\boldsymbol{T}\mapsto\boldsymbol{T}^{-1}=\left(\begin{array}{cc}
+\boldsymbol{R} & \boldsymbol{t}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)^{-1}=\left(\begin{array}{cc}
+\boldsymbol{R}^{T} & -\boldsymbol{R}^{T}\boldsymbol{t}\\
+\boldsymbol{0}^{T} & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.2.2.2.
+ Vector-Quaternion Pair
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+For the vector-quaternion case 
+\begin_inset Formula $\xi\sim(\boldsymbol{t},\mathring{q})$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{t}\in\mathbb{R}^{3}$
+\end_inset
+
+ is a vector defining the frame's origin with respect to the reference coordinat
+e frame, and 
+\begin_inset Formula $\mathring{q}\in\mathbb{S}^{3}$
+\end_inset
+
+is the frame's orientation with respect to the reference frame.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Compoaition is defined by:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\xi_{1}\oplus\xi_{2}=(\boldsymbol{t_{1}}+\mathring{q}_{1}\bullet\boldsymbol{t_{2}},\mathring{q}_{1}\circ\mathring{q}_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+and negation is
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\ominus\xi=(\mathring{q}^{-1}\bullet\boldsymbol{t},\mathring{q}^{-1})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+and a point coordinate vector is transformed to a coordinate frame by
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\boldsymbol{p}^{X}=\xi_{Y}^{X}\bullet\boldsymbol{p}^{Y}=\mathring{q}\bullet\boldsymbol{p}^{Y}+\boldsymbol{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+————————–
+\end_layout
+
+\end_body
+\end_document

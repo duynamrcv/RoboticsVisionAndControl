@@ -1,0 +1,877 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 3: Time and Motion
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.1.
+ Time-Varying Pose
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.1.1 Derivative of Pose
+\end_layout
+
+\begin_layout Standard
++ Represent the orientation of a coordinate frame is the exponential complex,
+ where the rotation is described by a rotational axis 
+\begin_inset Formula $\boldsymbol{\hat{\omega}}^{A}(t)$
+\end_inset
+
+ and the rotational angle 
+\begin_inset Formula $\theta(t)$
+\end_inset
+
+, and 
+\begin_inset Formula $\left[.\right]_{\times}$
+\end_inset
+
+ is a skew-symmetric matrix.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}_{B}^{A}(t)=e^{\left[\boldsymbol{\hat{\omega}}^{A}(t)\right]_{\times}\theta(t)}\in\boldsymbol{SE}(3)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The serivative with respect to time is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{R}}_{B}^{A}(t)=\left[\hat{\boldsymbol{\omega}}^{A}(t)\right]_{\times}\dot{\theta}e^{\left[\hat{\boldsymbol{\omega}}^{A}(t)\right]_{\times}\theta(t)}\in\mathbb{R}^{3\times3}=\left[\hat{\boldsymbol{\omega}}^{A}(t)\right]_{\times}\dot{\theta}\boldsymbol{R}_{B}^{A}(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{R}}_{B}^{A}=\left[\boldsymbol{\omega}^{A}\right]_{\times}\boldsymbol{R}_{B}^{A}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{\omega}^{A}=\hat{\boldsymbol{\omega}}\dot{\theta}$
+\end_inset
+
+is the angular velocity in frame {A}.
+\end_layout
+
+\begin_layout Standard
++ Angular velocity is pressed in frame {B}:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\omega}^{A}=\boldsymbol{R}_{B}^{A}\boldsymbol{\omega}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and using the identity 
+\begin_inset Formula $\left[\boldsymbol{Av}\right]_{\times}=\boldsymbol{A}\left[\boldsymbol{v}\right]_{\times}\boldsymbol{A}^{T}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\dot{R}}_{B}^{A}=\boldsymbol{R}_{B}^{A}\left[\boldsymbol{\omega}^{B}\right]_{\times}\in\mathbb{R}^{3\times3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The derivate of a unit quaternion as defined as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}_{B}^{A}=0.5\mathring{\boldsymbol{\omega}}^{A}\circ\mathring{\boldsymbol{q}}_{B}^{A}=0.5\mathring{\boldsymbol{q}}_{B}^{A}\circ\mathring{\boldsymbol{\omega}}^{B}\in\mathbb{H}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\mathring{\boldsymbol{\omega}}$
+\end_inset
+
+ is a pure quaternion formed from the angular velocity vector.
+\end_layout
+
+\begin_layout Standard
++ The derivate of pose :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi=\boldsymbol{T}_{B}^{A}=\left(\begin{array}{cc}
+\boldsymbol{R}_{B}^{A} & \boldsymbol{t}_{B}^{A}\\
+0^{T} & 1
+\end{array}\right)\Rightarrow\dot{\xi}=\dot{\boldsymbol{T}}_{B}^{A}=\left(\begin{array}{cc}
+\boldsymbol{\dot{R}}_{B}^{A} & \dot{\boldsymbol{t}}_{B}^{A}\\
+0^{T} & 0
+\end{array}\right)=\left(\begin{array}{cc}
+\left[\boldsymbol{\omega}^{A}\right]_{\times}\boldsymbol{R}_{B}^{A} & \boldsymbol{\dot{t}}_{B}^{A}\\
+0^{T} & 0
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The linear velocity 
+\begin_inset Formula $\boldsymbol{\upsilon}=\dot{\boldsymbol{t}}_{B}^{A}$
+\end_inset
+
+ is the velocity of the origin of {B} with respect to {A}.
+ The angular velocity 
+\begin_inset Formula $\boldsymbol{\omega}_{B}^{A}$
+\end_inset
+
+.
+ Combine to two velocity vectors to the spatial velocity vector:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v_{B}^{A}=\left(\boldsymbol{\upsilon}_{B}^{A},\boldsymbol{\omega}_{B}^{A}\right)\in\mathbb{R}^{6}$
+\end_inset
+
+ which is the instantaneous velocity of frame {B} with respect to {A}.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.1.2.
+ Transforming Spatial Velocities
+\end_layout
+
+\begin_layout Standard
++ The velocity of a moving body can be expressed with respect to a world
+ reference frame {A} or the moving frame {B} as shown in Fig 3.1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 3.1
+\end_layout
+
+\begin_layout Standard
++ The spatial velocities are linearly related by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v^{A}=\left(\begin{array}{cc}
+\boldsymbol{R}_{B}^{A} & 0\\
+0 & \boldsymbol{R}_{B}^{A}
+\end{array}\right)v^{B}=\boldsymbol{J}_{B}^{A}\left(\xi_{B}^{A}\right)v^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\xi_{B}^{A}\sim\left(\boldsymbol{R}_{B}^{A},\boldsymbol{t}_{B}^{A}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{J}_{B}^{A}(.)$
+\end_inset
+
+ is a Jacobian or interaction matrix.
+\end_layout
+
+\begin_layout Standard
++ For the case where frame {C} is also in the moving body the transformation
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c^{V}=\left(\begin{array}{cc}
+\boldsymbol{R}_{B}^{A} & \left[\boldsymbol{t}_{B}^{C}\right]_{\times}\boldsymbol{R}_{B}^{C}\\
+0 & \boldsymbol{R}_{B}^{C}
+\end{array}\right)v^{B}=Ad\left(\xi_{B}^{C}\right)v^{B}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.1.3.
+ Incremental Rotation
+\end_layout
+
+\begin_layout Standard
++ The physical meaning of 
+\begin_inset Formula $\dot{\boldsymbol{R}}$
+\end_inset
+
+is not intuitively obvious - it is simply the way that the elements of 
+\begin_inset Formula $\boldsymbol{R}$
+\end_inset
+
+ is change with time:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{R}}\approx frac\{\boldsymbol{R}\left\langle t+\delta_{t}\right\rangle -\boldsymbol{R}\left\langle t\right\rangle \}\{\delta_{t}\}\in\mathbb{R}^{3\times3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Consider an object whose body frames {B} at two consecutive timesteps
+ are related by a small rotation 
+\begin_inset Formula $\boldsymbol{R}_{\Delta}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}_{B}\left\langle t+\delta_{t}\right\rangle =\boldsymbol{R}_{B}\left\langle t\right\rangle \boldsymbol{R}_{\Delta}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}_{\Delta}^{B}\approx\delta_{t}\left[\boldsymbol{\omega}^{B}\right]_{\times}+\boldsymbol{I}_{3\times3}$
+\end_inset
+
+ which says that an infinitesimally small rotation can be approximated by
+ the sum of a skew-symmetric matrix and an identity matrix.
+\end_layout
+
+\begin_layout Standard
++ The approximate angular velocity vector
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\omega}\approx1/\delta_{t}*V_{\times}\left(\boldsymbol{R}_{B}\left\langle t\right\rangle ^{T}\boldsymbol{R}_{B}\left\langle t+\delta_{t}\right\rangle -\boldsymbol{I}_{3\times3}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $V_{\times}(.)$
+\end_inset
+
+ is the inverse skew-symmetric matrix operator such that if 
+\begin_inset Formula $\boldsymbol{S}=[\boldsymbol{v}]_{\times}$
+\end_inset
+
+ then 
+\begin_inset Formula $\boldsymbol{v}=V_{\times}(\boldsymbol{S})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Approximately update the rotation matrix
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}_{B}\left\langle t+\delta_{t}\right\rangle \approx\boldsymbol{R}_{B}\left\langle t\right\rangle +\delta_{t}\boldsymbol{R}_{B}\left\langle t\right\rangle \left[\boldsymbol{\omega}\right]_{\times}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is cheap to compute, involves no trigonometric operations, and is
+ key to inertial navigation systems.
+\end_layout
+
+\begin_layout Standard
++ Approximate the quaternion derivative by a first-order difference
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}\approx frac\{\mathring{\boldsymbol{q}}\left\langle k+1\right\rangle -\mathring{\boldsymbol{q}}\left\langle k\right\rangle \}\{\delta_{t}\}\in\mathbb{H}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathring{\boldsymbol{q}}\left\langle k+1\right\rangle \approx\mathring{\boldsymbol{q}}\left\langle k\right\rangle +0.5\delta_{t}\mathring{\boldsymbol{\omega}}\circ\mathring{\boldsymbol{q}}\left\langle k\right\rangle $
+\end_inset
+
+ which is even cheaper to compute than the rotation matrix approach.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.1.4.
+ Incremental Rigid-Body Motion
+\end_layout
+
+\begin_layout Standard
++ Consider two poses ξ1 and ξ2 which differ infinitesimally and are related
+ by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{2}=\xi_{1}+\xi_{\Delta}$
+\end_inset
+
+where 
+\begin_inset Formula $\xi_{\Delta}=\ominus\xi_{1}+\xi_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ In homogeneous transformation matrix form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{\Delta}\sim\boldsymbol{T}_{\Delta}=\left(\begin{array}{cc}
+\boldsymbol{R}_{\Delta} & \boldsymbol{t}_{\Delta}\\
+0^{T} & 1
+\end{array}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{t}_{\Delta}$
+\end_inset
+
+ is an incremental displacement and 
+\begin_inset Formula $\boldsymbol{R}_{\Delta}$
+\end_inset
+
+ is an incremental rotation matrix.
+\end_layout
+
+\begin_layout Standard
++ The incremental rigid-body motion can be described by just six parameters
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Delta\left(\xi_{1},\xi_{2}\right)\mapsto\boldsymbol{\Delta}_{\xi}\in\mathbb{R}^{6}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{\Delta}_{\xi}=\left(\boldsymbol{\Delta}_{t},\boldsymbol{\Delta}_{R}\right)$
+\end_inset
+
+can be considered as a spatial displacement.
+\end_layout
+
+\begin_layout Standard
++ A body with constant spatial velocity 
+\begin_inset Formula $\boldsymbol{v}$
+\end_inset
+
+ for 
+\begin_inset Formula $δ_{t}$
+\end_inset
+
+ seconds undergoes a spatial displacement of
+\begin_inset Formula $\boldsymbol{\Delta}_{\xi}=\delta_{t}\boldsymbol{v}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The inverse operator:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Delta^{-1}\left(\boldsymbol{\Delta}_{\xi}\right)\mapsto\xi_{\Delta}\in\boldsymbol{SE}(3)$
+\end_inset
+
+is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{\Delta}\sim\boldsymbol{T}_{\Delta}=\left(\begin{array}{cc}
+\left[\boldsymbol{\Delta}_{R}\right]_{\times}+\boldsymbol{I}_{3\times3} & \boldsymbol{\Delta}_{t}\\
+0^{T} & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.2.
+ Accelerating Bodies and Reference Frames
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.2.1.
+ Dynamics of Moving Bodies
+\end_layout
+
+\begin_layout Standard
++ For translational Newtons's second law: the acceleration of a particle
+ with position 
+\begin_inset Formula $x$
+\end_inset
+
+ and mass 
+\begin_inset Formula $m$
+\end_inset
+
+ is force 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m\ddot{\boldsymbol{x}}^{0}=\boldsymbol{f}^{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Rotational motion in 
+\begin_inset Formula $\boldsymbol{SO}(3)$
+\end_inset
+
+ is described by Euler’s equations of motion which relates the angular accelerat
+ion of the body in the body frame
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}^{B}\dot{\boldsymbol{\omega}}^{B}+\boldsymbol{\omega}^{B}\times\left(\boldsymbol{J}^{B}\boldsymbol{\omega}^{B}\right)=\boldsymbol{\tau}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where torque or moment 
+\begin_inset Formula $\boldsymbol{\tau}$
+\end_inset
+
+and a positive-definite rotational inertia matrix 
+\begin_inset Formula $\boldsymbol{J}^{B}\in\mathbb{R}^{3\times3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+——————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- The rotational inertia of a body is represented by the 
+\begin_inset Formula $3\times3$
+\end_inset
+
+ symmetric matrix
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\boldsymbol{J}=\left(\begin{array}{ccc}
+J_{xx} & J_{xy} & J_{xz}\\
+J_{yx} & J_{yy} & J_{yz}\\
+J_{zx} & J_{zy} & J_{zz}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The diagonal elements are the positive moments of inertia, and the off-diagonal
+ elements are products of inertia.
+ Only six of these nine elements are unique: three moments and three products
+ of inertia.
+ The products of inertia are all zero if the object’s mass distribution
+ is symmetrical with respect to the coordinate frame
+\end_layout
+
+\begin_layout Standard
+——————–
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.2.2 Transforming Force and Torque
+\end_layout
+
+\begin_layout Standard
++ Combine translational force and rotational torque into a 6-vector that
+ is called a wrench 
+\begin_inset Formula $\boldsymbol{W}=(f_{x},f_{y},f_{z},m_{x},m_{y},m_{z})\in\mathbb{R}^{6}$
+\end_inset
+
+.
+ A wrench 
+\series bold
+
+\begin_inset Formula $\boldsymbol{W}^{B}$
+\end_inset
+
+
+\series default
+ is defined with respect to the coordinate frame {B} and applied at the
+ origin of that frame.
+\end_layout
+
+\begin_layout Standard
++ The wrench 
+\begin_inset Formula $\boldsymbol{W}^{C}$
+\end_inset
+
+ is equivalent if it causes the same motion of the body when applied to
+ the origin of coordinate frame {C} and defined with respect to {C}.
+ The wrenches are related by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{W}^{C}=\left(\begin{array}{cc}
+\boldsymbol{R}_{C}^{B} & \left[\boldsymbol{t}_{C}^{B}\right]_{\times}\boldsymbol{R}_{C}^{B}\\
+0 & \boldsymbol{R}_{C}^{B}
+\end{array}\right)^{T}\boldsymbol{W}^{B}=Ad\left(\xi_{C}^{B}\right)^{T}\boldsymbol{W}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.2.3.
+ Inertial Reference Frame
+\end_layout
+
+\begin_layout Standard
++ The reference frame {B} is rotating with angular velocity 
+\begin_inset Formula $\boldsymbol{\omega}$
+\end_inset
+
+ about its origin then Newton’s second law becomes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m\left(\dot{\boldsymbol{\upsilon}}^{B}+\boldsymbol{\omega}\times\left(\boldsymbol{\omega\times}\boldsymbol{p}^{B}\right)+2\boldsymbol{\omega}\times\boldsymbol{\upsilon}^{B}+(d\boldsymbol{\omega}/dt)\times\boldsymbol{p}^{B}\right)=\boldsymbol{f}^{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{\omega}\times\left(\boldsymbol{\omega\times}\boldsymbol{p}^{B}\right)$
+\end_inset
+
+ is centripental; 
+\begin_inset Formula $2\boldsymbol{\omega}\times\boldsymbol{\upsilon}^{B}$
+\end_inset
+
+ is Coriolis and 
+\begin_inset Formula $(d\boldsymbol{\omega}/dt)\times\boldsymbol{p}^{B}$
+\end_inset
+
+ is Euler
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.3.
+ Creating Time-Varying Pose
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.3.1.
+ Smooth One-Dimensional Trajectories
+\end_layout
+
+\begin_layout Standard
++ A quintic (fi fth-order) polynomial is often used
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $s(t)=At^{5}+Bt^{4}+Ct^{3}+Dt^{2}+Et+F$
+\end_inset
+
+ where time 
+\begin_inset Formula $t\in[0,T]$
+\end_inset
+
+.
+ The fi rst- and second-derivatives are also smooth polynomials:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{s}(t)=5At^{4}+4Bt^{3}+3Ct^{2}+2Dt+E$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ddot{s}(t)=20At^{3}+12Bt^{2}+6Ct+2D$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The matrix form:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+s_{0}\\
+s_{T}\\
+\dot{s}_{0}\\
+\dot{s}_{T}\\
+\ddot{s}_{0}\\
+\ddot{s}_{T}
+\end{array}\right)=\left(\begin{array}{cccccc}
+0 & 0 & 0 & 0 & 0 & 1\\
+T^{5} & T^{4} & T^{3} & T^{2} & T & 1\\
+0 & 0 & 0 & 0 & 1 & 0\\
+5T^{4} & 4T^{3} & 3T^{2} & 2T & 1 & 0\\
+0 & 0 & 0 & 2 & 0 & 0\\
+20T^{3} & 12T^{2} & 6T & 2 & 0 & 0
+\end{array}\right)\left(\begin{array}{c}
+A\\
+B\\
+C\\
+D\\
+E\\
+F
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.3.2.
+ Multi-Dimensional Trajectories
+\end_layout
+
+\begin_layout Standard
++ The robot’s configuration is a vector 
+\begin_inset Formula $q∈\mathbb{R}^{N}$
+\end_inset
+
+ where N is the number of degrees of freedom.
+ Ex: The configuration of a 3-joint robot would be its joint angles 
+\begin_inset Formula $\boldsymbol{q}=(q_{1},q_{2},q_{3})$
+\end_inset
+
+.
+ The configuration vector of wheeled mobile robot might be its position
+ 
+\begin_inset Formula $\boldsymbol{q}=(x,y)$
+\end_inset
+
+ or its position and heading angle 
+\begin_inset Formula $\boldsymbol{q}=(x,y,θ)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.3.3.
+ Multi-Segment Trajectories
+\end_layout
+
+\begin_layout Standard
++ The trajectory is defined by M configurations 
+\begin_inset Formula $q_{k},k\in[1,M]$
+\end_inset
+
+ and there are
+\begin_inset Formula $M-1$
+\end_inset
+
+ motion segments.
+ 
+\begin_inset Formula $q_{k}\in\mathbb{R}^{N}$
+\end_inset
+
+ is a vector representation of configuration.
+ The robot starts from 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ at rest and finishes at 
+\begin_inset Formula $q_{M}$
+\end_inset
+
+ at rest, but moves through (or close to) the intermediate configurations
+ without stopping.
+\end_layout
+
+\begin_layout Standard
++ The average acceleration during the blend is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ddot{\boldsymbol{q}}=frac\{\dot{\boldsymbol{q}}_{k+1}-\dot{\boldsymbol{q}}_{k}\}\{t_{acc}\}$
+\end_inset
+
+ where 
+\begin_inset Formula $t_{acc}$
+\end_inset
+
+is the blend time that is set to be constant
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 3.2
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.4.
+ Application: Inertial Navigation
+\end_layout
+
+\begin_layout Standard
++ An inertial navigation system or INS is a “black box” that estimates its
+ velocity, orientation and position by measuring accelerations and angular
+ velocities and integrating them over time.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.4.1.
+ Gyroscopes
+\end_layout
+
+\end_body
+\end_document
