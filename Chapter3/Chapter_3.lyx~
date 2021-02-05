@@ -715,7 +715,7 @@ where
 \end_inset
 
 .
- The fi rst- and second-derivatives are also smooth polynomials:
+ The first- and second-derivatives are also smooth polynomials:
 \end_layout
 
 \begin_layout Standard
@@ -851,6 +851,279 @@ is the blend time that is set to be constant
 \end_inset
 
  Fig 3.2
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.4.
+ Application: Inertial Navigation
+\end_layout
+
+\begin_layout Standard
++ An inertial navigation system or INS is a “black box” that estimates its
+ velocity, orientation and position by measuring accelerations and angular
+ velocities and integrating them over time.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.4.1.
+ Gyroscopes
+\end_layout
+
+\begin_layout Standard
++ 
+\begin_inset Formula $\tau=\boldsymbol{\omega}\times\boldsymbol{h}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{h}$
+\end_inset
+
+is the angular momentum of the gyroscope, a vector parallel to the rotor’s
+ axis of spin and with magnitude 
+\begin_inset Formula $\left\Vert \boldsymbol{h}\right\Vert =J\varpi$
+\end_inset
+
+ where 
+\begin_inset Formula $J$
+\end_inset
+
+ is the rotor’s inertia and 
+\begin_inset Formula $\varpi$
+\end_inset
+
+ is rotational speed.
+ 
+\end_layout
+
+\begin_layout Standard
++ 
+\series bold
+\emph on
+Estimating Orientation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\omega}^{B}$
+\end_inset
+
+ is constant over a time interval 
+\begin_inset Formula $\delta_{t}$
+\end_inset
+
+ the equivalent rotation at the timestep 
+\begin_inset Formula $k$
+\end_inset
+
+ is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{\Delta}^{B}\left\langle k\right\rangle \sim e^{\left[\boldsymbol{\omega}^{B\#}\right]_{\times}\delta_{t}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the orientation of the sensor frame is initially 
+\begin_inset Formula $\xi^{B}$
+\end_inset
+
+ then the evolution of estimated pose can be written in discrete-time form
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\xi}_{B}\left\langle k+1\right\rangle \leftarrow\hat{\xi}_{B}\left\langle k\right\rangle \oplus\xi_{\Delta}^{B}\left\langle k\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.4.2.
+ Accelerometers
+\end_layout
+
+\begin_layout Standard
++ Gravitational acceleration can be approximated by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $g\approx9.780327\left(1+0.0053024\sin^{2}\theta-0.0000058\sin^{2}2\theta\right)-0.000003086h$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is the angle of latitude and 
+\begin_inset Formula $h$
+\end_inset
+
+ is height above sea level.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
++ How Accelerometers work
+\end_layout
+
+\begin_layout Standard
+In the inertial reference frame Newton’s second law for the proof mass is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m\ddot{x}_{m}=F_{s}-mg$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and for a spring with natural length 
+\begin_inset Formula $l_{0}$
+\end_inset
+
+ the relationship between force and extension 
+\begin_inset Formula $d$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $F_{s}=kd$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The various displacements are related
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x_{b}-\left(l_{0}+d\right)=x_{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Rightarrow\ddot{x}_{b}-\ddot{d}=\left(kd-mg\right)/m$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The acceleration of the accelerometer 
+\begin_inset Formula $a=\ddot{x}_{b}$
+\end_inset
+
+ and the relative displacement of the proof mass:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d=m\left(a+g\right)/k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 3.3
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
++ Estimating Pose and Body Acceleration
+\end_layout
+
+\begin_layout Standard
+In frame {0} with its z-axis vertically upward, the gravitational acceleration
+ vector is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{a}^{0}=\left(\begin{array}{c}
+0\\
+0\\
+g
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In a body-fixed frame {B} at an arbitrary orientation expressed in terms
+ of ZYX roll-pitch-yaw angles
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{B}^{0}=R_{z}(\theta_{y})\oplus R_{y}(\theta_{p})\oplus R_{z}(\theta_{r})$
+\end_inset
+
+ the gravitational acceleration will be:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{a}^{B}=\left(\ominus\xi_{B}^{0}\right)\bullet\boldsymbol{a}^{0}=\left(\begin{array}{c}
+-g\sin\theta_{p}\\
+g\cos\theta_{p}\sin\theta_{r}\\
+g\cos\theta_{p}\cos\theta_{r}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The measured acceleration vector from the sensor in frame {B} is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{a}^{B\#}=\left(\begin{array}{c}
+a_{x}\\
+a_{y}\\
+a_{z}
+\end{array}\right)\Rightarrow\left\{ \begin{array}{c}
+\sin\hat{\theta}_{p}=-a_{x}/g\\
+\tan\hat{\theta}_{r}=a_{y}/a_{z},\theta_{p}\neq\pm\pi/2
+\end{array}\right.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+3.4.3.
+ Magnetometers
 \end_layout
 
 \end_body
