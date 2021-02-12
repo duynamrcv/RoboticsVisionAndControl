@@ -187,7 +187,13 @@ and by simple geometry the turning radius is
 \end_layout
 
 \begin_layout Standard
-+ The velocity of the robot in the world frame is (Kinematic only)
++ The velocity of the robot in the world frame is (Kinematic only: 
+\series bold
+\emph on
+Bicycle model
+\series default
+\emph default
+)
 \end_layout
 
 \begin_layout Standard
@@ -622,12 +628,157 @@ k_{\rho}\sin\alpha-k_{\alpha}\alpha-k_{\beta}\beta\\
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename ../example_7.png
+	filename example_7.png
 	lyxscale 54
 
 \end_inset
 
  Fig 4.7
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+4.1.2.
+ Differentially-Steered Vehicle
+\end_layout
+
+\begin_layout Standard
++ The vehicle’s velocity is by definition 
+\begin_inset Formula $\upsilon$
+\end_inset
+
+ in the vehicle’s x-direction, and zero in the y-direction since the wheels
+ cannot slip sideways.
+ In the vehicle frame {B} this is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\upsilon}^{B}=\left(v,0\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The configuration of the vehicle is represented by the generalized coordinates
+ 
+\begin_inset Formula $\boldsymbol{q}=\left(x,y,\theta\right)\in\mathbb{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbb{C}\subset\mathbb{R}^{2}\times\mathbb{S}^{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_8.png
+
+\end_inset
+
+ Fig 4.8
+\end_layout
+
+\begin_layout Standard
++ The angular velocity if {B} is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\theta}=\upsilon_{L}/R_{L}=\upsilon_{R}/R_{R}$
+\end_inset
+
+ and since 
+\begin_inset Formula $R_{R}=R_{L}+W$
+\end_inset
+
+ we can write the turn rate:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\theta}=\left(\upsilon_{R}-\upsilon_{L}\right)/W$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The equation of motion are:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\dot{x}=\upsilon\cos\theta\\
+\dot{y}=\upsilon\sin\theta\\
+\dot{\theta}=\upsilon_{\Delta}/W
+\end{array}$
+\end_inset
+
+ where 
+\begin_inset Formula $\begin{array}{c}
+\upsilon=0.5\left(\upsilon_{R}+\upsilon_{L}\right)\\
+\upsilon_{\Delta}=\upsilon_{R}-\upsilon_{L}
+\end{array}$
+\end_inset
+
+.
+ This kinematic model often called the 
+\series bold
+\emph on
+unicycle model
+\end_layout
+
+\begin_layout Standard
++ We move the vehicle’s reference frame to {B′} and ignore orientation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\dot{x}\\
+\dot{y}
+\end{array}\right)=\left(\begin{array}{cc}
+\cos\theta & -a\sin\theta\\
+\sin\theta & a\cos\theta
+\end{array}\right)\left(\begin{array}{c}
+\upsilon\\
+\omega
+\end{array}\right)$
+\end_inset
+
+ and if 
+\begin_inset Formula $a\neq0$
+\end_inset
+
+ this can be inverted:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\upsilon\\
+\omega
+\end{array}\right)=\left(\begin{array}{cc}
+\cos\theta & \sin\theta\\
+-\frac{1}{a}\sin\theta & \frac{1}{a}\cos\theta
+\end{array}\right)\left(\begin{array}{c}
+\dot{x}\\
+\dot{y}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+4.1.3.
+ Omnidirectional Vehicle
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body

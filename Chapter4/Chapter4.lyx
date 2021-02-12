@@ -187,7 +187,13 @@ and by simple geometry the turning radius is
 \end_layout
 
 \begin_layout Standard
-+ The velocity of the robot in the world frame is (Kinematic only)
++ The velocity of the robot in the world frame is (Kinematic only: 
+\series bold
+\emph on
+Bicycle model
+\series default
+\emph default
+)
 \end_layout
 
 \begin_layout Standard
@@ -628,6 +634,275 @@ k_{\rho}\sin\alpha-k_{\alpha}\alpha-k_{\beta}\beta\\
 \end_inset
 
  Fig 4.7
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+4.1.2.
+ Differentially-Steered Vehicle
+\end_layout
+
+\begin_layout Standard
++ The vehicle’s velocity is by definition 
+\begin_inset Formula $\upsilon$
+\end_inset
+
+ in the vehicle’s x-direction, and zero in the y-direction since the wheels
+ cannot slip sideways.
+ In the vehicle frame {B} this is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\upsilon}^{B}=\left(v,0\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The configuration of the vehicle is represented by the generalized coordinates
+ 
+\begin_inset Formula $\boldsymbol{q}=\left(x,y,\theta\right)\in\mathbb{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbb{C}\subset\mathbb{R}^{2}\times\mathbb{S}^{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_8.png
+
+\end_inset
+
+ Fig 4.8
+\end_layout
+
+\begin_layout Standard
++ The angular velocity if {B} is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\theta}=\upsilon_{L}/R_{L}=\upsilon_{R}/R_{R}$
+\end_inset
+
+ and since 
+\begin_inset Formula $R_{R}=R_{L}+W$
+\end_inset
+
+ we can write the turn rate:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\theta}=\left(\upsilon_{R}-\upsilon_{L}\right)/W$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The equation of motion are:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\dot{x}=\upsilon\cos\theta\\
+\dot{y}=\upsilon\sin\theta\\
+\dot{\theta}=\upsilon_{\Delta}/W
+\end{array}$
+\end_inset
+
+ where 
+\begin_inset Formula $\begin{array}{c}
+\upsilon=0.5\left(\upsilon_{R}+\upsilon_{L}\right)\\
+\upsilon_{\Delta}=\upsilon_{R}-\upsilon_{L}
+\end{array}$
+\end_inset
+
+.
+ This kinematic model often called the 
+\series bold
+\emph on
+unicycle model
+\end_layout
+
+\begin_layout Standard
++ We move the vehicle’s reference frame to {B′} and ignore orientation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\dot{x}\\
+\dot{y}
+\end{array}\right)=\left(\begin{array}{cc}
+\cos\theta & -a\sin\theta\\
+\sin\theta & a\cos\theta
+\end{array}\right)\left(\begin{array}{c}
+\upsilon\\
+\omega
+\end{array}\right)$
+\end_inset
+
+ and if 
+\begin_inset Formula $a\neq0$
+\end_inset
+
+ this can be inverted:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\upsilon\\
+\omega
+\end{array}\right)=\left(\begin{array}{cc}
+\cos\theta & \sin\theta\\
+-\frac{1}{a}\sin\theta & \frac{1}{a}\cos\theta
+\end{array}\right)\left(\begin{array}{c}
+\dot{x}\\
+\dot{y}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+4.1.3.
+ Omnidirectional Vehicle
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_9.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 4.9
+\end_layout
+
+\begin_layout Standard
++ A wheel coordinate frame {W} with its x-axis pointing in the direction
+ of wheel motion (Fig 4.9).
+\end_layout
+
+\begin_layout Standard
++ Rotation of the wheel will cause forward velocity of 
+\begin_inset Formula $R\varpi\hat{\boldsymbol{x}_{w}}$
+\end_inset
+
+ where 
+\begin_inset Formula $R$
+\end_inset
+
+ is the wheel radius and 
+\begin_inset Formula $\varpi$
+\end_inset
+
+ is the wheel rotational rate.
+\end_layout
+
+\begin_layout Standard
++ The roller is free to roll in the direction indicated by the green line
+\end_layout
+
+\begin_layout Standard
++ A desired velocity:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\upsilon}=\upsilon_{w}\hat{\boldsymbol{x}}_{w}+\upsilon_{r}\left(\cos\alpha\hat{\boldsymbol{x}}_{w}+\sin\alpha\hat{\boldsymbol{y}}_{w}\right)=\left(\upsilon_{w}+\upsilon_{r}\cos\alpha\right)\hat{\boldsymbol{x}}_{w}+\upsilon_{r}\sin\alpha\hat{\boldsymbol{y}}_{w}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\upsilon_{w}\hat{\boldsymbol{x}}_{w}$
+\end_inset
+
+ is driven and 
+\begin_inset Formula $\upsilon_{r}\left(\cos\alpha\hat{\boldsymbol{x}}_{w}+\sin\alpha\hat{\boldsymbol{y}}_{w}\right)$
+\end_inset
+
+ is rolling; 
+\begin_inset Formula $\upsilon_{w}$
+\end_inset
+
+ is the speed due to wheel rotation and 
+\begin_inset Formula $\upsilon_{r}$
+\end_inset
+
+ is the rolling speed.
+\end_layout
+
+\begin_layout Standard
++ Rolling speed 
+\begin_inset Formula $\upsilon_{r}=\boldsymbol{\upsilon}_{y}/\sin\alpha$
+\end_inset
+
+ and the wheel velocity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\upsilon_{w}=\boldsymbol{\upsilon}_{x}-\boldsymbol{\upsilon}_{y}\cot\alpha$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The wheel rotation rate is 
+\begin_inset Formula $\varpi=\upsilon_{w}/R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The configuration of the vehicle is represented by the generalized coordinates
+ 
+\begin_inset Formula $\boldsymbol{q}=\left(x,y,\theta\right)\in\mathbb{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbb{C}\subset\mathbb{R}^{2}\times\mathbb{S}^{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ For a desired body velocity 
+\begin_inset Formula $\boldsymbol{\upsilon}_{B}^{B}$
+\end_inset
+
+ and angular rate 
+\begin_inset Formula $\omega^{B}$
+\end_inset
+
+ the velocity at each wheel contact point is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\upsilon}_{i}^{B}=\boldsymbol{\upsilon}_{B}^{B}+\omega^{B}\hat{\boldsymbol{z}}_{B}\times\boldsymbol{p}_{i}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+4.2.
+ Flying Robots
 \end_layout
 
 \end_body
