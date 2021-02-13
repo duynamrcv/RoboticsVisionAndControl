@@ -778,7 +778,390 @@ unicycle model
 \end_layout
 
 \begin_layout Standard
+\begin_inset Graphics
+	filename example_9.png
+	lyxscale 75
 
+\end_inset
+
+ Fig 4.9
+\end_layout
+
+\begin_layout Standard
++ A wheel coordinate frame {W} with its x-axis pointing in the direction
+ of wheel motion (Fig 4.9).
+\end_layout
+
+\begin_layout Standard
++ Rotation of the wheel will cause forward velocity of 
+\begin_inset Formula $R\varpi\hat{\boldsymbol{x}_{w}}$
+\end_inset
+
+ where 
+\begin_inset Formula $R$
+\end_inset
+
+ is the wheel radius and 
+\begin_inset Formula $\varpi$
+\end_inset
+
+ is the wheel rotational rate.
+\end_layout
+
+\begin_layout Standard
++ The roller is free to roll in the direction indicated by the green line
+\end_layout
+
+\begin_layout Standard
++ A desired velocity:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\upsilon}=\upsilon_{w}\hat{\boldsymbol{x}}_{w}+\upsilon_{r}\left(\cos\alpha\hat{\boldsymbol{x}}_{w}+\sin\alpha\hat{\boldsymbol{y}}_{w}\right)=\left(\upsilon_{w}+\upsilon_{r}\cos\alpha\right)\hat{\boldsymbol{x}}_{w}+\upsilon_{r}\sin\alpha\hat{\boldsymbol{y}}_{w}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\upsilon_{w}\hat{\boldsymbol{x}}_{w}$
+\end_inset
+
+ is driven and 
+\begin_inset Formula $\upsilon_{r}\left(\cos\alpha\hat{\boldsymbol{x}}_{w}+\sin\alpha\hat{\boldsymbol{y}}_{w}\right)$
+\end_inset
+
+ is rolling; 
+\begin_inset Formula $\upsilon_{w}$
+\end_inset
+
+ is the speed due to wheel rotation and 
+\begin_inset Formula $\upsilon_{r}$
+\end_inset
+
+ is the rolling speed.
+\end_layout
+
+\begin_layout Standard
++ Rolling speed 
+\begin_inset Formula $\upsilon_{r}=\boldsymbol{\upsilon}_{y}/\sin\alpha$
+\end_inset
+
+ and the wheel velocity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\upsilon_{w}=\boldsymbol{\upsilon}_{x}-\boldsymbol{\upsilon}_{y}\cot\alpha$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The wheel rotation rate is 
+\begin_inset Formula $\varpi=\upsilon_{w}/R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The configuration of the vehicle is represented by the generalized coordinates
+ 
+\begin_inset Formula $\boldsymbol{q}=\left(x,y,\theta\right)\in\mathbb{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbb{C}\subset\mathbb{R}^{2}\times\mathbb{S}^{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ For a desired body velocity 
+\begin_inset Formula $\boldsymbol{\upsilon}_{B}^{B}$
+\end_inset
+
+ and angular rate 
+\begin_inset Formula $\omega^{B}$
+\end_inset
+
+ the velocity at each wheel contact point is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\upsilon}_{i}^{B}=\boldsymbol{\upsilon}_{B}^{B}+\omega^{B}\hat{\boldsymbol{z}}_{B}\times\boldsymbol{p}_{i}^{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+4.2.
+ Flying Robots
+\end_layout
+
+\begin_layout Standard
++ Flying robots have 6 DOF and their configuration 
+\begin_inset Formula $\boldsymbol{q}\in\mathbb{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbb{C}\subset\mathbb{R}^{3}\times\mathbb{S}^{1}\times\mathbb{S}^{1}\times\mathbb{S}^{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ They are actuated by forces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_10.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 4.10
+\end_layout
+
+\begin_layout Standard
++ The body coordinate frame {B} has its z-axis downward following the aerospace
+ convention.
+ 
+\end_layout
+
+\begin_layout Standard
++ The quadrotor has four rotors, labeled 1 to 4, mounted at the end of each
+ cross arm.
+\end_layout
+
+\begin_layout Standard
++ The rotor speed is 
+\begin_inset Formula $\varpi_{i}$
+\end_inset
+
+ and the thrust is an upward vector
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T_{i}=b\varpi_{i}^{2},i=1,2,3,4$
+\end_inset
+
+ in the vehicle's negative z-direction, where 
+\begin_inset Formula $b>0$
+\end_inset
+
+ is the lift constant.
+\end_layout
+
+\begin_layout Standard
++ The translational dynamics of the vehicle in world coordinates 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m\dot{\boldsymbol{\upsilon}}=\left(\begin{array}{c}
+0\\
+0\\
+mg
+\end{array}\right)-\boldsymbol{R}_{B}^{0}\left(\begin{array}{c}
+0\\
+0\\
+T
+\end{array}\right)-B\boldsymbol{\upsilon}$
+\end_inset
+
+ where 
+\series bold
+
+\begin_inset Formula $\boldsymbol{\upsilon}$
+\end_inset
+
+
+\series default
+ is the velocity of the vehicle's center of mass in the world frame, 
+\begin_inset Formula $g$
+\end_inset
+
+ is gravitational acceleration, 
+\begin_inset Formula $m$
+\end_inset
+
+ is the total mass of the vehicle, 
+\begin_inset Formula $B$
+\end_inset
+
+ is aerodynamic friction an 
+\begin_inset Formula $T=\sum T_{i}$
+\end_inset
+
+ is the total upward thrust.
+\end_layout
+
+\begin_layout Standard
++ The first term is the force of gravity which acts downward in the world
+ frame, the second term is the total thrust in the vehicle frame rotated
+ into the world coordinate frame and the third term is aerodynamic drag.
+\end_layout
+
+\begin_layout Standard
++ Pairwise differences in rotor thrusts cause the vehicle to rotate.
+ The torque about the vehicle’s x-axis, the 
+\emph on
+rolling torque
+\emph default
+, is generated by the moments:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tau_{x}=dT_{4}-dT_{2}$
+\end_inset
+
+ where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the distance from the rotor axis to the center of mass.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tau_{x}=db\left(\varpi_{4}^{2}-\varpi_{2}^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Similarly for the y-axis, the 
+\emph on
+pitching torque 
+\emph default
+is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tau_{y}=db\left(\varpi_{1}^{2}-\varpi_{3}^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The torque applied to each propeller by the motor is opposed by aerodynamic
+ drag:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Q_{i}=k\varpi_{i}^{2}$
+\end_inset
+
+ where 
+\begin_inset Formula $k$
+\end_inset
+
+ depends on the same factor as 
+\begin_inset Formula $b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The total reaction torque about the z-axis:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tau_{z}=Q_{1}-Q_{2}+Q_{3}-Q_{4}=k\left(\varpi_{1}^{2}+\varpi_{3}^{2}-\varpi_{2}^{2}-\varpi_{4}^{2}\right)$
+\end_inset
+
+ where the different signs are due to the different rotation directions
+ of the rotors.
+\end_layout
+
+\begin_layout Standard
++ The total torque applied to thr airframe is 
+\begin_inset Formula $\boldsymbol{\tau}=\left(\tau_{x},\tau_{y},\tau_{z}\right)^{T}$
+\end_inset
+
+and the rotation acceleration is 
+\begin_inset Formula $\boldsymbol{J\dot{\omega}}=-\boldsymbol{\omega}\times\boldsymbol{J\omega}+\boldsymbol{\tau}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{J}$
+\end_inset
+
+ is the 
+\begin_inset Formula $3\times3$
+\end_inset
+
+ inertia matrix of the vehicle and 
+\begin_inset Formula $\boldsymbol{\omega}$
+\end_inset
+
+is the angular velocity vector.
+\end_layout
+
+\begin_layout Standard
++ The motion of the quadrotor is obtained by integrating the forward dynamics
+ queation where forces and moments of the airframe
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+T\\
+\boldsymbol{\tau}
+\end{array}\right)=\left(\begin{array}{cccc}
+-b & -b & -b & -b\\
+0 & -db & 0 & db\\
+db & 0 & -db & 0\\
+k & -k & k & -k
+\end{array}\right)\left(\begin{array}{c}
+\varpi_{1}^{2}\\
+\varpi_{2}^{2}\\
+\varpi_{3}^{2}\\
+\varpi_{4}^{2}
+\end{array}\right)=\boldsymbol{A}\left(\begin{array}{c}
+\varpi_{1}^{2}\\
+\varpi_{2}^{2}\\
+\varpi_{3}^{2}\\
+\varpi_{4}^{2}
+\end{array}\right)$
+\end_inset
+
+ are function of the rotor speeds.
+ The matrix 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ is constant, and full rank if 
+\begin_inset Formula $b,k,d>0$
+\end_inset
+
+ and can be inverted
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\varpi_{1}^{2}\\
+\varpi_{2}^{2}\\
+\varpi_{3}^{2}\\
+\varpi_{4}^{2}
+\end{array}\right)=\boldsymbol{A}^{-1}\left(\begin{array}{c}
+T\\
+\tau_{x}\\
+\tau_{y}\\
+\tau_{z}
+\end{array}\right)$
+\end_inset
+
+ to solve the rotor speeds.
 \end_layout
 
 \end_body
