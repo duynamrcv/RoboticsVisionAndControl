@@ -1,0 +1,311 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 5: Navigation
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.1.
+ Reactive Navigation
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.1.1.
+ Braitenberg Vehicles
+\end_layout
+
+\begin_layout Standard
++ A very simple class of goal achieving robots are known as Braitenberg
+ vehicles and are characterized by direct connection between sensors and
+ motors.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 64
+
+\end_inset
+
+Fig 5.1
+\end_layout
+
+\begin_layout Standard
++ We use two sensors, bilateral sensing, with one on each side of the robot’s
+ body (green blocks).
+ The value to be sensed:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $sensor=200/((x-xc)^{2}+(y-yc)^{2}+200)$
+\end_inset
+
+ where 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ is the sensor position and 
+\begin_inset Formula $(xc,yc)$
+\end_inset
+
+ is the goal position, all in the worlf frame.
+\end_layout
+
+\begin_layout Standard
+which returns the sensor value 
+\begin_inset Formula $s(x,y)\in[0,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The vehicle speed is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v=2-s_{R}-s_{L}$
+\end_inset
+
+ where 
+\begin_inset Formula $s_{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{L}$
+\end_inset
+
+ are the right and left sensor reading.
+ At the goal: 
+\begin_inset Formula $s_{R}=s_{L}=1$
+\end_inset
+
+, the velocity becomes zero.
+\end_layout
+
+\begin_layout Standard
+Steeing angle:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\gamma=k\left(s_{R}-s_{L}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.1.2.
+ Simple Automata
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 5.2
+\end_layout
+
+\begin_layout Standard
++ The bug algorithm (green line).
+ Obstacles are indicated by red pixels.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.
+ Map-Based Planning
+\end_layout
+
+\begin_layout Standard
++ The key to achieving the best path between points A and B is to use a
+ map.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.1.
+ Distance Transform
+\end_layout
+
+\begin_layout Standard
++ The plan is the distance map.
+ Wherever the robot starts, it moves to the neighboring cell that has the
+ smallest distance to the goal.
+ The process is repeated until the robot reaches a cell with a distance
+ value of zero which is the goal.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.2.
+ D*
+\end_layout
+
+\begin_layout Standard
++ A popular algorithm for robot path planning is D∗ which fi nds the best
+ path.
+\end_layout
+
+\begin_layout Standard
++ D* has a number of features that are useful for real-world applications.
+\end_layout
+
+\begin_layout Standard
+- Firstly, it generalizes the occupancy grid to a cost map which represents
+ the cost 
+\begin_inset Formula $c\in\mathbb{R},c>0$
+\end_inset
+
+ of traversing each cell in the horizontal or vertical direction.
+ The cost of traversing the cell diagonally is 
+\begin_inset Formula $c\sqrt{2}$
+\end_inset
+
+.
+ For cells corresponding to obstacles 
+\begin_inset Formula $c=\infty$
+\end_inset
+
+ (
+\begin_inset Formula $Inf$
+\end_inset
+
+ in MATLAB).
+\end_layout
+
+\begin_layout Standard
+- Secondly, D* supports incremental replanning.
+ This is important if, while we are moving, we discover that the world is
+ different to our map.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 5.3
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.3.
+ Introduction to Roadmap Method
+\end_layout
+
+\begin_layout Standard
++ In robotic path planning the analysis of the map is referred to as the
+ 
+\emph on
+planning phase.
+\end_layout
+
+\begin_layout Standard
++ The 
+\emph on
+query phase
+\emph default
+ uses the result of the planning phase to find a path from A to B.
+ 
+\end_layout
+
+\begin_layout Standard
++ The disparity in planning and query costs has led to the development of
+ roadmap methods where the query can include both the start and goal positions.
+\end_layout
+
+\end_body
+\end_document
