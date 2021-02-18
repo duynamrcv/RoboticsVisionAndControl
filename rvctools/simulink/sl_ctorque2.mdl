@@ -1004,7 +1004,7 @@ Model {
       BackgroundColor	      "red"
       DropShadow	      on
       LibraryVersion	      "1.51"
-      SourceBlock	      "roblocks/Dynamics/Robot"
+      SourceBlock	      "/Dynamics/Robot"
       SourceType	      ""
       ShowPortLabels	      "FromPortIcon"
       SystemSampleTime	      "-1"
