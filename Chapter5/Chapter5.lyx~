@@ -225,6 +225,34 @@ Steeing angle:
 \end_layout
 
 \begin_layout Standard
++ The distance between two point 
+\begin_inset Formula $(x_{1},y_{1})$
+\end_inset
+
+ and 
+\begin_inset Formula $(x_{2},y_{2})$
+\end_inset
+
+ where 
+\begin_inset Formula $\Delta_{x}=x_{2}-x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta_{y}=y_{2}-y_{1}$
+\end_inset
+
+can be Euclidean distance 
+\begin_inset Formula $\sqrt{\Delta_{x}^{2}+\Delta_{y}^{2}}$
+\end_inset
+
+or CityBlock distance 
+\begin_inset Formula $\text{\left|\Delta_{x}\right|+\left|\Delta_{y}\right|}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 
 \series bold
 5.2.2.
@@ -305,6 +333,69 @@ query phase
 \begin_layout Standard
 + The disparity in planning and query costs has led to the development of
  roadmap methods where the query can include both the start and goal positions.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.4.
+ Probabilistic Roadmap Method (PRM)
+\end_layout
+
+\begin_layout Standard
++ The high computational cost of the distance transform and skeletonization
+ methods makes them infeasible for large maps and has led to the development
+ of probabilistic methods.
+\end_layout
+
+\begin_layout Standard
++ These methods sparsely sample the world map and the most well known of
+ these methods is the probabilistic roadmap or PRM method.
+\end_layout
+
+\begin_layout Standard
++ The query phase finds a path from the start point to the goal.
+ This is simply a matter of moving to the closest node in the roadmap (the
+ start node), following a minimum cost A* route through the roadmap, getting
+ off at the node closest to the goal and then traveling to the goal.
+\end_layout
+
+\begin_layout Standard
++ There are some important tradeoffs in achieving this computational efficiency.
+\end_layout
+
+\begin_layout Standard
+- Firstly, the underlying random sampling of the free space means that a
+ different roadmap is created every time the planner is run, resulting in
+ different paths and path lengths.
+\end_layout
+
+\begin_layout Standard
+- Secondly, the planner can fail by creating a network consisting of disjoint
+ components.
+\end_layout
+
+\begin_layout Standard
+- Thirdly, long narrow gaps between obstacles such as corridors are unlikely
+ to be exploited since the probability of randomly choosing points that
+ lie along such spaces is very low.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 5.4
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.5.
+ Lattice Planner
 \end_layout
 
 \end_body

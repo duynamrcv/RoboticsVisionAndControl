@@ -342,5 +342,194 @@ query phase
  Probabilistic Roadmap Method (PRM)
 \end_layout
 
+\begin_layout Standard
++ The high computational cost of the distance transform and skeletonization
+ methods makes them infeasible for large maps and has led to the development
+ of probabilistic methods.
+\end_layout
+
+\begin_layout Standard
++ These methods sparsely sample the world map and the most well known of
+ these methods is the probabilistic roadmap or PRM method.
+\end_layout
+
+\begin_layout Standard
++ The query phase finds a path from the start point to the goal.
+ This is simply a matter of moving to the closest node in the roadmap (the
+ start node), following a minimum cost A* route through the roadmap, getting
+ off at the node closest to the goal and then traveling to the goal.
+\end_layout
+
+\begin_layout Standard
++ There are some important tradeoffs in achieving this computational efficiency.
+\end_layout
+
+\begin_layout Standard
+- Firstly, the underlying random sampling of the free space means that a
+ different roadmap is created every time the planner is run, resulting in
+ different paths and path lengths.
+\end_layout
+
+\begin_layout Standard
+- Secondly, the planner can fail by creating a network consisting of disjoint
+ components.
+\end_layout
+
+\begin_layout Standard
+- Thirdly, long narrow gaps between obstacles such as corridors are unlikely
+ to be exploited since the probability of randomly choosing points that
+ lie along such spaces is very low.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 5.4
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.5.
+ Lattice Planner
+\end_layout
+
+\begin_layout Standard
++ The planners take into account the motion model of the vehicle, and the
+ robot is capable of omnidirectional motion.
+\end_layout
+
+\begin_layout Standard
++ Each path is an arc which requires a constant steering wheel setting and
+ the arc radius is chosen so that at the end of each arc the robot’s heading
+ direction is some multiple of 
+\begin_inset Formula $\pi/2$
+\end_inset
+
+ radians.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_5.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 5.5
+\end_layout
+
+\begin_layout Standard
++ The Lattice planner with 1 (a),2 (b) and 8 (c) iterations.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+5.2.6.
+ Rapidly-Exploring Random Tree (RRT)
+\end_layout
+
+\begin_layout Standard
++ RRT takes into acccount the motion model of the vehicle and uses probabilistic
+ methods like the PRM planner.
+\end_layout
+
+\begin_layout Standard
++ The paths are computed over a fi xed time interval for discrete values
+ of velocity, forward or backward, and various steering angles.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_6.png
+
+\end_inset
+
+ Fig 5.6
+\end_layout
+
+\begin_layout Standard
++ The main steps in creating an RRT are as follows, with the notation shown
+ in Fig 5.6.
+ A graph of robot configurations is maintained and each node is a configuration
+ 
+\begin_inset Formula $\boldsymbol{q}\in\mathbb{R}^{2}\times\mathbb{S}^{1}$
+\end_inset
+
+ which is represented by a 3-vector 
+\begin_inset Formula $\boldsymbol{q}\sim\left(x,y,\theta\right)$
+\end_inset
+
+.
+ The first, or root, node in the graph is the goal configuration of the
+ robot.
+ A random configuration 
+\begin_inset Formula $\boldsymbol{q}_{rand}$
+\end_inset
+
+ is chosen, and the node with the closest configuration 
+\begin_inset Formula $\boldsymbol{q}_{near}$
+\end_inset
+
+ is found – this configuration is near in terms of a cost function that
+ includes distance and orientation.
+ A control is computed that moves the robot from 
+\begin_inset Formula $\boldsymbol{q}_{near}$
+\end_inset
+
+ toward 
+\begin_inset Formula $\boldsymbol{q}_{rand}$
+\end_inset
+
+ over a fixed path simulation time.
+ The configuration that it reaches is 
+\begin_inset Formula $\boldsymbol{q}_{new}$
+\end_inset
+
+ and this is added to the graph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_7.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 5.7
+\end_layout
+
+\begin_layout Standard
++ The random tree is shown in Fig.
+ 5.7 and we see that the paths have a good coverage of the configuration
+ space, not just in the x- and y-directions but also in orientation, which
+ is why the algorithm is known as
+\emph on
+ rapidly exploring
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
++ Some important points about the RRT.
+\end_layout
+
+\begin_layout Standard
+- Firstly, as for the PRM planner, there may be some distance (and orientation)
+ between the start and goal configuration and the nearest node.
+ Minimizing this requires tuning RRT parameters such as the number of nodes
+ and path simulation time.
+\end_layout
+
+\begin_layout Standard
+- Secondly, the path is feasible but not quite optimal.
+\end_layout
+
 \end_body
 \end_document
