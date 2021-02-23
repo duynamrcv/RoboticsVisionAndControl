@@ -1,0 +1,368 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 6.
+ Localization
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.1.
+ Dead Reckoning
+\end_layout
+
+\begin_layout Standard
++ Dead reckoning is the estimation of a robot’s pose based on its estimated
+ speed, direction and time of travel with respect to a previous estimate.
+\end_layout
+
+\begin_layout Standard
++ An odometer is a sensor that measures distance traveled and sometimes
+ also change in heading direction.
+ For wheeled vehicles this can be determined by measuring the angular rotation
+ of the wheels.
+ The direction of travel can be measured using an electronic compass, or
+ the change in heading can be measured using a gyroscope or differential
+ odometry.
+\end_layout
+
+\begin_layout Standard
++ But they are imperfect due to systematic errors.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.1.1.
+ Modeling the Vehicle
+\end_layout
+
+\begin_layout Standard
++ The first step in estimating the robot’s pose is to write a function,
+ 
+\begin_inset Formula $\boldsymbol{f}(.)$
+\end_inset
+
+, that describes how the vehicle’s configuration changes from one time step
+ to the next.
+\end_layout
+
+\begin_layout Standard
++ A discrete-time model for the evolution of confi guration based on odometry
+ where 
+\begin_inset Formula $\delta\left\langle k\right\rangle =\left(\delta_{d},\delta_{\theta}\right)$
+\end_inset
+
+ is the distance traveled and change in heading over the preceding interval,
+ and 
+\begin_inset Formula $k$
+\end_inset
+
+ is the time step.
+ The initial pose is represented in 
+\begin_inset Formula $\boldsymbol{SE}(2)$
+\end_inset
+
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi\left\langle k\right\rangle \sim\left(\begin{array}{ccc}
+\cos\theta\left\langle k\right\rangle  & -\sin\theta\left\langle k\right\rangle  & x\left\langle k\right\rangle \\
+\sin\theta\left\langle k\right\rangle  & \cos\theta\left\langle k\right\rangle  & y\left\langle k\right\rangle \\
+0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The motion over the small time that move forward in the vehicle x-direction
+ by 
+\begin_inset Formula $\delta_{d}$
+\end_inset
+
+, and then rotate by 
+\begin_inset Formula $\delta_{\theta}$
+\end_inset
+
+ giving the new configuration:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi\left\langle k+1\right\rangle \sim\left(\begin{array}{ccc}
+\cos\theta\left\langle k\right\rangle  & -\sin\theta\left\langle k\right\rangle  & x\left\langle k\right\rangle \\
+\sin\theta\left\langle k\right\rangle  & \cos\theta\left\langle k\right\rangle  & y\left\langle k\right\rangle \\
+0 & 0 & 1
+\end{array}\right)\left(\begin{array}{ccc}
+1 & 0 & \delta_{d}\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{array}\right)\left(\begin{array}{ccc}
+\cos\delta_{\theta} & -\sin\delta_{\theta} & 0\\
+\sin\delta_{\theta} & \cos\delta_{\theta} & 0\\
+0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sim\left(\begin{array}{ccc}
+\cos\left(\theta\left\langle k\right\rangle +\delta_{\theta}\right) & -\sin\left(\theta\left\langle k\right\rangle +\delta_{\theta}\right) & x\left\langle k\right\rangle +\delta_{d}\cos\theta\left\langle k\right\rangle \\
+\sin\left(\theta\left\langle k\right\rangle +\delta_{\theta}\right) & \cos\left(\theta\left\langle k\right\rangle +\delta_{\theta}\right) & y\left\langle k\right\rangle +\delta_{d}\cos\theta\left\langle k\right\rangle \\
+0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which can represent as a3-vector 
+\begin_inset Formula $\boldsymbol{x}=\left(x,y,\theta\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}\left\langle k+1\right\rangle =\left(\begin{array}{c}
+x\left\langle k\right\rangle +\delta_{d}\cos\theta\left\langle k\right\rangle \\
+y\left\langle k\right\rangle +\delta_{d}\cos\theta\left\langle k\right\rangle \\
+\theta\left\langle k\right\rangle +\delta_{\theta}
+\end{array}\right)$
+\end_inset
+
+ which gives the new configuration in terms of the previous configuration
+ and the odometry.
+\end_layout
+
+\begin_layout Standard
++ In practive, odemetry is not perfect.
+ The measured output of the real odometer is the perfect but unknown, odometry
+ 
+\begin_inset Formula $(\delta_{d},\delta_{\theta})$
+\end_inset
+
+ plus the output of the random number generator 
+\begin_inset Formula $(v_{d},v_{\theta})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The robot’s configuration at the next time step, including the odometry
+ error
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}\left\langle k+1\right\rangle =\boldsymbol{f}\left(\boldsymbol{x}\left\langle k\right\rangle ,\delta\left\langle k\right\rangle ,\boldsymbol{\upsilon}\left\langle k\right\rangle \right)=\left(\begin{array}{c}
+x\left\langle k\right\rangle +\left(\delta_{d}+v_{d}\right)\cos\theta\left\langle k\right\rangle \\
+y\left\langle k\right\rangle +\left(\delta_{d}+v_{d}\right)\cos\theta\left\langle k\right\rangle \\
+\theta\left\langle k\right\rangle +\delta_{\theta}+v_{\theta}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $k$
+\end_inset
+
+ is the time step, 
+\begin_inset Formula $\delta\left\langle k\right\rangle =\left(\delta_{d},\delta_{\theta}\right)^{T}\in\mathbb{R}^{2\times1}$
+\end_inset
+
+ is the odometry measurement and 
+\begin_inset Formula $\boldsymbol{\upsilon}\left\langle k\right\rangle =\left(v_{d},v_{\theta}\right)^{T}\in\mathbb{R}^{2\times1}$
+\end_inset
+
+ is the random measurement noise.
+\end_layout
+
+\begin_layout Standard
++ The odometry noise as 
+\begin_inset Formula $\boldsymbol{\upsilon}\left\langle k\right\rangle =\left(v_{d},v_{\theta}\right)^{T}\sim N\left(0,\boldsymbol{V}\right),$
+\end_inset
+
+a zero-mean multivariate Gaussian process with variance
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{V}=\left(\begin{array}{cc}
+\sigma_{d}^{2} & 0\\
+0 & \sigma_{\theta}^{2}
+\end{array}\right)$
+\end_inset
+
+.
+ This constant matrix, the covariance matrix, is diagonal which means that
+ the errors in distance and heading are 
+\emph on
+independent
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.1.2.
+ Estimating Pose
+\end_layout
+
+\begin_layout Standard
++ The problem: how to estimate our new pose given the previous pose and
+ noisy odometry: Kalman filter.
+ This filter provides the optimal estimate of the system state, vehicle
+ configuration in this case, assuming that the noise is zero-mean and Gaussian.
+ The Kalman filter is formulated for linear systems but our model of the
+ vehicle’s motion is nonlinear – the tool of choice is the extended Kalman
+ filter ( EKF).
+\end_layout
+
+\begin_layout Standard
++ The vehicle's configuration:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}=\left(x_{v},y_{v},\theta_{v}\right)^{T}$
+\end_inset
+
+ and the prediction equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle =\boldsymbol{f}\left(\hat{\boldsymbol{x}}\left\langle k\right\rangle ,\hat{\boldsymbol{u}}\left\langle k\right\rangle \right)\\
+\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle =\boldsymbol{F}_{x}\hat{\boldsymbol{P}}\left\langle k\right\rangle \boldsymbol{F}_{x}^{T}+\boldsymbol{F}_{v}\hat{\boldsymbol{V}}\boldsymbol{F}_{v}^{T}
+\end{array}$
+\end_inset
+
+ describe how the state and covariance evolve with time.
+ The term 
+\begin_inset Formula $\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle $
+\end_inset
+
+ indicates an estimate of 
+\begin_inset Formula $x$
+\end_inset
+
+ at time 
+\begin_inset Formula $k+1$
+\end_inset
+
+ based on information up to, and including, time 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\hat{\boldsymbol{u}}\left\langle k\right\rangle $
+\end_inset
+
+ is the input to the process, which in this case is the measured odometry,
+ so 
+\begin_inset Formula $\hat{\boldsymbol{u}}\left\langle k\right\rangle =\delta\left\langle k\right\rangle $
+\end_inset
+
+.
+ 
+\begin_inset Formula $\hat{\boldsymbol{P}}\in\mathbb{R}^{3\times3}$
+\end_inset
+
+ is a covariance matrix representing uncertainty in the estimated vehicle
+ configuration.
+\begin_inset Formula $\hat{\boldsymbol{V}}$
+\end_inset
+
+ is our estimate of the covariance of the odometry noise which in reality
+ we do not know.
+\end_layout
+
+\end_body
+\end_document
