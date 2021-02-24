@@ -77,6 +77,339 @@
 
 \begin_layout Standard
 
+\series bold
+Part III.
+ Arm-Type Robots
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Chapter 7.
+ Robot Arm Kinematics
+\end_layout
+
+\begin_layout Standard
++ Kinematics is the branch of mechanics that studies the motion of a body,
+ or a system of bodies, without considering its mass or the forces acting
+ on it.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.1.
+ Forward Kinematic
+\end_layout
+
+\begin_layout Standard
++ Forward kinematics is the mapping from joint coordinates, or robot configurati
+on, to end-effector pose.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.1.1.
+ 2-Dimensional (Planar) Robotics Arms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 60
+
+\end_inset
+
+ Fig 7.1
+\end_layout
+
+\begin_layout Standard
++ Consider the simple robot arm shown in Fig 7.1a which has a single rotational
+ joint.
+ The pose {E}:7
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{E}(\boldsymbol{q})=R_{z}(q_{1})\oplus T_{x}(a_{1})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Consider robot arm with two joints as shown in Fig 7.1b:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{E}(\boldsymbol{q})=R_{z}(q_{1})\oplus T_{x}(a_{1})\oplus R_{z}(q_{2})\oplus T_{x}(a_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ A few characteristics of this simple planar robot arm:
+\end_layout
+
+\begin_layout Standard
+- Firstly, most end-effector positions can be reached with two different
+ joint angle vectors.
+\end_layout
+
+\begin_layout Standard
+- Secondly, the robot can position the end-effector at any point within
+ its reach but we cannot specify an arbitrary orientation.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.1.2.
+ 3-Dimensional Robotics Arms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 90
+
+\end_inset
+
+Fig 7.2 Model Puma 560 with 6DOF
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{E}=T_{z}(L_{1})\oplus R_{z}(q_{1})\oplus R_{y}(q_{2})\oplus T_{y}(L_{2})\oplus T_{z}(L_{3})\oplus R_{y}(q_{3})\oplus T_{x}(L_{4})\oplus T_{y}(L_{5})\oplus T_{z}(L_{6})\oplus R_{z}(q_{4})\oplus R_{y}(q_{5})\oplus R_{z}(q_{6})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ A number of approaches have been developed to more concisely describe
+ a serial-link robotic arm: Denavit-Hartenberg notation and product of exponenti
+als.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 90
+
+\end_inset
+
+ Fig 7.3
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.1.2.1.
+ Denavit-Hartenberg Parameters
+\end_layout
+
+\begin_layout Standard
++ The transformation from link coordinate frame {j − 1} to frame {j} is
+ defined in terms of elementary rotations and translations as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{j}^{j-1}\left(\theta_{j},d_{j},a_{j},\alpha_{j}\right)=R_{z}(\theta_{j})\oplus T_{z}(d_{j})\oplus T_{x}(a_{j})\oplus R_{x}(\alpha_{j})$
+\end_inset
+
+ which can be expanded in matrix:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A_{j}^{j-1}=\left(\begin{array}{cccc}
+\cos\theta_{j} & -\sin\theta_{j}\cos\alpha_{j} & \sin\theta_{j}\sin\alpha_{j} & a_{j}\cos\theta_{j}\\
+\sin\theta_{j} & \cos\theta_{j}\cos\alpha_{j} & -\cos\theta_{j}\sin\alpha_{j} & a_{j}\sin\theta_{j}\\
+0 & \sin\alpha_{j} & \cos\alpha_{j} & d_{j}\\
+0 & 0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The parameters 
+\begin_inset Formula $\alpha_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ are always constant.
+ For a revolute joint, 
+\begin_inset Formula $\theta_{j}$
+\end_inset
+
+ is the joint variable and 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+ is constant, while for a prismatic joint, 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+ is variable, 
+\begin_inset Formula $\theta_{j}$
+\end_inset
+
+ is constant and 
+\begin_inset Formula $a_{j}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ In many of the formulations that follow, we use generalized joint coordinates
+\begin_inset Formula $q_{j}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+if 
+\begin_inset Formula $\sigma_{j}=\left\{ \begin{array}{c}
+R:\theta_{j}\leftarrow q_{j}\\
+P:d_{j}\leftarrow q_{j}
+\end{array}\right.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ For an N-axis robot, the generalized joint coordinates 
+\begin_inset Formula $q\in\mathbb{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbb{C}\subset\mathbb{R}^{N}$
+\end_inset
+
+ is called the 
+\emph on
+joint space 
+\emph default
+or
+\emph on
+ configuration space
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.1.2.2.
+ Product of Exponentials
+\end_layout
+
+\begin_layout Standard
++ In matrix form the twist 
+\begin_inset Formula $S\in\mathbb{R}^{6}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{T}'=e^{[S]\theta}\boldsymbol{T}$
+\end_inset
+
+ rotates the coordinate frame described by the pose 
+\begin_inset Formula $T$
+\end_inset
+
+ about the screw axis by an angle 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ Forward kinematics as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{T}_{E}=e^{[S_{1}]q_{1}}\boldsymbol{T}_{E}(0)$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{T}_{E}(0)$
+\end_inset
+
+is the end-effector pose in the zero-angle joint configuration 
+\begin_inset Formula $q_{1}=0$
+\end_inset
+
+ of robot shown in Fig 7.1a
+\end_layout
+
+\begin_layout Standard
++ For the 2-joint robot of Fig 7.1b:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{T}_{E}=e^{[S_{1}]q_{1}}e^{[S_{2}]q_{2}}\boldsymbol{T}_{E}(0)$
+\end_inset
+
+ where 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{2}$
+\end_inset
+
+ are the screws defi ned by the joint axes and 
+\begin_inset Formula $\boldsymbol{T}_{E}(0)$
+\end_inset
+
+ is the end-effector pose in the zero-angle joint configuration: 
+\begin_inset Formula $q_{1}=q_{2}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ For a general robot that moves in 3-dimensions we can write the forward
+ kinematics in product of exponential (PoE) form as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{E}\sim\boldsymbol{T}_{E}^{0}=e^{[S_{1}]q_{1}}\cdots e^{[S_{N}]q_{N}}\boldsymbol{T}_{E}^{0}(0)$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{T}_{E}^{0}(0)$
+\end_inset
+
+ is the end-effector pose when the joint coordinates are all zero and 
+\begin_inset Formula $S_{j}$
+\end_inset
+
+ is the twist for joint 
+\begin_inset Formula $j$
+\end_inset
+
+ expressed in the world frame.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.1.2.3.
+ 6-Axis Industrial Robot
 \end_layout
 
 \end_body

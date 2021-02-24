@@ -312,5 +312,196 @@ or
  Product of Exponentials
 \end_layout
 
+\begin_layout Standard
++ In matrix form the twist 
+\begin_inset Formula $S\in\mathbb{R}^{6}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{T}'=e^{[S]\theta}\boldsymbol{T}$
+\end_inset
+
+ rotates the coordinate frame described by the pose 
+\begin_inset Formula $T$
+\end_inset
+
+ about the screw axis by an angle 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ Forward kinematics as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{T}_{E}=e^{[S_{1}]q_{1}}\boldsymbol{T}_{E}(0)$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{T}_{E}(0)$
+\end_inset
+
+is the end-effector pose in the zero-angle joint configuration 
+\begin_inset Formula $q_{1}=0$
+\end_inset
+
+ of robot shown in Fig 7.1a
+\end_layout
+
+\begin_layout Standard
++ For the 2-joint robot of Fig 7.1b:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{T}_{E}=e^{[S_{1}]q_{1}}e^{[S_{2}]q_{2}}\boldsymbol{T}_{E}(0)$
+\end_inset
+
+ where 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{2}$
+\end_inset
+
+ are the screws defi ned by the joint axes and 
+\begin_inset Formula $\boldsymbol{T}_{E}(0)$
+\end_inset
+
+ is the end-effector pose in the zero-angle joint configuration: 
+\begin_inset Formula $q_{1}=q_{2}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ For a general robot that moves in 3-dimensions we can write the forward
+ kinematics in product of exponential (PoE) form as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{E}\sim\boldsymbol{T}_{E}^{0}=e^{[S_{1}]q_{1}}\cdots e^{[S_{N}]q_{N}}\boldsymbol{T}_{E}^{0}(0)$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{T}_{E}^{0}(0)$
+\end_inset
+
+ is the end-effector pose when the joint coordinates are all zero and 
+\begin_inset Formula $S_{j}$
+\end_inset
+
+ is the twist for joint 
+\begin_inset Formula $j$
+\end_inset
+
+ expressed in the world frame.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.
+ Inverse Kinematics
+\end_layout
+
+\begin_layout Standard
++ The inverse problem: given the desired pose of the end-effector 
+\begin_inset Formula $\xi_{E}$
+\end_inset
+
+ what are the required joint coordinates?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}=K^{-1}(\xi)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.1.
+ 2-Dimensional Robotic Arms
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.1.1.
+ Closed-Form Solution
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.1.2.
+ Numerical Solution
+\end_layout
+
+\begin_layout Standard
++ This is an optimization problem – to minimize the error between the forward
+ kinematic solution and the desired pose 
+\begin_inset Formula $\xi^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}^{*}=argmin\left\Vert K(\boldsymbol{q})\ominus\xi^{*}\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ For our simple 2-link example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $E(q)=\left\Vert \left[K(\boldsymbol{q})\right]_{t}-\left(x^{*},y^{*}\right)^{T}\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.
+ 3-Dimensional Robotics Arms
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.1.
+ Closed-Form Solution
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.2.
+ Numerical Solution
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.3.
+ Under-Actuated Manipulator
+\end_layout
+
 \end_body
 \end_document
