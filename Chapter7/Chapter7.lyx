@@ -503,5 +503,115 @@ is the end-effector pose in the zero-angle joint configuration
  Under-Actuated Manipulator
 \end_layout
 
+\begin_layout Standard
++ An under-actuated manipulator is one that has fewer than six joints, and
+ is therefore limited in the end-effector poses that it can attain.
+ 
+\end_layout
+
+\begin_layout Standard
++ They typically have an 
+\begin_inset Formula $x,y,z,θ$
+\end_inset
+
+ task space,
+\begin_inset Formula $\mathbb{T}\subset\mathbb{R}^{3}×\mathbb{S}^{1}$
+\end_inset
+
+ and a configuration space
+\begin_inset Formula $\mathbb{C}\subset(\mathbb{S}^{1})^{3}×\mathbb{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.4.
+ Redundant Manipulator
+\end_layout
+
+\begin_layout Standard
++ A redundant manipulator is a robot with more than six joints.
+ 
+\end_layout
+
+\begin_layout Standard
++ Six joints is theoretically sufficient to achieve any desired pose in
+ a Cartesian taskspace 
+\begin_inset Formula $\mathbb{T\subset}\boldsymbol{SE}(3)$
+\end_inset
+
+.
+ However practical issues such as joint limits and singularities mean that
+ not all poses within the robot’s reachable space can be achieved.
+ Adding additional joints is one way to overcome this problem but results
+ in an infinite number of joint-coordinate solutions.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.
+ Trajectories
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.1.
+ Joint-Space Motion
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.2.
+ Cartesian Motion
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.3.
+ Kinematics in Simulink
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 7.4
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.4.
+ Motion through a Singularity
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.5.
+ Configuration Change
+\end_layout
+
+\begin_layout Standard
++ Consider the problem of a robot that is working for a while left-handed
+ at one work station, then working right-handed at another.
+ Movement from one configuration to another ultimately results in no change
+ in the end-effector pose since both configuration have the same forward
+ kinematic solution – therefore we cannot create a trajectory in Cartesian
+ space.
+ Instead we must use joint-space motion.
+\end_layout
+
 \end_body
 \end_document

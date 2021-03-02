@@ -408,8 +408,196 @@ is the end-effector pose in the zero-angle joint configuration
 \begin_layout Standard
 
 \series bold
-7.1.2.3.
- 6-Axis Industrial Robot
+7.2.
+ Inverse Kinematics
+\end_layout
+
+\begin_layout Standard
++ The inverse problem: given the desired pose of the end-effector 
+\begin_inset Formula $\xi_{E}$
+\end_inset
+
+ what are the required joint coordinates?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}=K^{-1}(\xi)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.1.
+ 2-Dimensional Robotic Arms
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.1.1.
+ Closed-Form Solution
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.1.2.
+ Numerical Solution
+\end_layout
+
+\begin_layout Standard
++ This is an optimization problem – to minimize the error between the forward
+ kinematic solution and the desired pose 
+\begin_inset Formula $\xi^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}^{*}=argmin\left\Vert K(\boldsymbol{q})\ominus\xi^{*}\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ For our simple 2-link example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $E(q)=\left\Vert \left[K(\boldsymbol{q})\right]_{t}-\left(x^{*},y^{*}\right)^{T}\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.
+ 3-Dimensional Robotics Arms
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.1.
+ Closed-Form Solution
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.2.
+ Numerical Solution
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.3.
+ Under-Actuated Manipulator
+\end_layout
+
+\begin_layout Standard
++ An under-actuated manipulator is one that has fewer than six joints, and
+ is therefore limited in the end-effector poses that it can attain.
+ 
+\end_layout
+
+\begin_layout Standard
++ They typically have an 
+\begin_inset Formula $x,y,z,θ$
+\end_inset
+
+ task space,
+\begin_inset Formula $\mathbb{T}\subset\mathbb{R}^{3}×\mathbb{S}^{1}$
+\end_inset
+
+ and a configuration space
+\begin_inset Formula $\mathbb{C}\subset(\mathbb{S}^{1})^{3}×\mathbb{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.2.2.4.
+ Redundant Manipulator
+\end_layout
+
+\begin_layout Standard
++ A redundant manipulator is a robot with more than six joints.
+ 
+\end_layout
+
+\begin_layout Standard
++ Six joints is theoretically sufficient to achieve any desired pose in
+ a Cartesian taskspace 
+\begin_inset Formula $\mathbb{T\subset}\boldsymbol{SE}(3)$
+\end_inset
+
+.
+ However practical issues such as joint limits and singularities mean that
+ not all poses within the robot’s reachable space can be achieved.
+ Adding additional joints is one way to overcome this problem but results
+ in an infinite number of joint-coordinate solutions.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.
+ Trajectories
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.1.
+ Joint-Space Motion
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.2.
+ Cartesian Motion
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.3.
+ Kinematics in Simulink
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 7.4
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+7.3.4.
+ Motion through a Singularity
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body

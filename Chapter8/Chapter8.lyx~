@@ -1,0 +1,877 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 8.
+ Manipulator Velocity
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.1.
+ Manipulator Jacobian
+\end_layout
+
+\begin_layout Standard
++ The relationship between the rate of change of these quantities – between
+ joint velocity and velocity of the end-effector .
+ This is called the velocity or differential kinematics of the manipulator.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.1.1.
+ Jacobian in the World Coordinate Frame
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 8.1
+\end_layout
+
+\begin_layout Standard
++ The position of the end-effector 
+\begin_inset Formula $\boldsymbol{p}=(x,y)\in\mathbb{R}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left\{ \begin{array}{c}
+x=a_{1}\cos\left(q_{1}\right)+a_{2}\cos\left(q_{1}+q_{2}\right)\\
+y=a_{1}\sin\left(q_{1}\right)+a_{2}\sin\left(q_{1}+q_{2}\right)
+\end{array}\right.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The derivative of 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+ with respect to the joints variables 
+\begin_inset Formula $\boldsymbol{q}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d\boldsymbol{p}/d\boldsymbol{q}=\boldsymbol{J}(\boldsymbol{q})$
+\end_inset
+
+ will be a matrix - a Jacobian matrix:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{cc}
+-a_{2}\sin\left(q_{1}+q_{2}\right)-a_{1}\sin\left(q_{1}\right) & -a_{2}\sin\left(q_{1}+q_{2}\right)\\
+a_{2}\cos\left(q_{1}+q_{2}\right)+a_{1}\cos\left(q_{1}\right) & a_{2}\cos\left(q_{1}+q_{2}\right)
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ To determine the relationship between 
+\emph on
+joint velocity
+\emph default
+ and 
+\emph on
+end-effector velocity:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d\boldsymbol{p}=\boldsymbol{J}(\boldsymbol{q})d\boldsymbol{q}$
+\end_inset
+
+ and divide through by 
+\begin_inset Formula $dt$
+\end_inset
+
+ to obtain
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d\boldsymbol{p}/dt=\boldsymbol{J}(\boldsymbol{q})d\boldsymbol{q}/dt\Leftrightarrow\dot{\boldsymbol{p}}=\boldsymbol{J}(\boldsymbol{q})\dot{\boldsymbol{q}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The Jacobian matrix maps velocity from the joint coordinate or configuration
+ space to the end-effector’s Cartesian coordinate space and is itself a
+ function of the joint coordinates.
+\end_layout
+
+\begin_layout Standard
++ Forward kinematics is: 
+\begin_inset Formula $\xi^{0}=K(\boldsymbol{q})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and derivative: 
+\begin_inset Formula $\boldsymbol{v}^{0}=\boldsymbol{J}(\boldsymbol{q})^{0}\dot{\boldsymbol{q}}$
+\end_inset
+
+ where 
+\series bold
+
+\begin_inset Formula $\boldsymbol{v}^{0}=\left(v_{x},v_{y},v_{z},\omega_{x},\omega_{y},\omega_{z}\right)\in\mathbb{R}^{6}$
+\end_inset
+
+ 
+\series default
+of the end-effector.
+\end_layout
+
+\begin_layout Standard
+The matrix 
+\begin_inset Formula $\boldsymbol{J}(\boldsymbol{q})^{0}\in\mathbb{R}^{6\times N}$
+\end_inset
+
+ is the manipulator Jacobian 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.1.2.
+ Jacobian in the End-Effector Coordinate Frame
+\end_layout
+
+\begin_layout Standard
+New Jacobian for end-effector velocity:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{v}^{E}=\boldsymbol{J}_{0}^{E}\left(\xi_{0}^{E}\right)\boldsymbol{J}\left(\boldsymbol{q}\right)\dot{\boldsymbol{q}}=\left(\begin{array}{cc}
+\boldsymbol{R}_{0}^{E} & 0\\
+0 & \boldsymbol{R}_{0}^{E}
+\end{array}\right)\boldsymbol{J}\left(\boldsymbol{q}\right)\dot{\boldsymbol{q}}=\boldsymbol{J}^{E}\left(\boldsymbol{q}\right)\dot{\boldsymbol{q}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.1.3.
+ Analytical Jacobian
+\end_layout
+
+\begin_layout Standard
++ Consider the case of XYZ roll-pitch-yaw angles 
+\begin_inset Formula $\boldsymbol{\Gamma}=\left(\theta_{r},\theta_{p},\theta_{y}\right)$
+\end_inset
+
+ for which the rotation matrix:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{R}=\boldsymbol{R}_{x}\left(\theta_{y}\right)\boldsymbol{R}_{y}\left(\theta_{p}\right)\boldsymbol{R}_{z}\left(\theta_{r}\right)=\left(\begin{array}{ccc}
+c\theta_{p}c\theta_{r} & -c\theta_{p}s\theta_{r} & s\theta_{p}\\
+c\theta_{y}s\theta_{r}+c\theta_{r}s\theta_{p}s\theta_{y} & -s\theta_{p}s\theta_{y}s\theta_{r}+c\theta_{y}c\theta_{r} & -c\theta_{p}s\theta_{y}\\
+s\theta_{y}s\theta_{r}-c\theta_{y}c\theta_{r}s\theta_{p} & c\theta_{y}s\theta_{p}s\theta_{r}+c\theta_{r}s\theta_{y} & c\theta_{p}c\theta_{y}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The derivative 
+\begin_inset Formula $\dot{\boldsymbol{R}}$
+\end_inset
+
+: 
+\begin_inset Formula $\dot{\ensuremath{\boldsymbol{R}}}=\left[\boldsymbol{\omega}\right]_{\times}\boldsymbol{R}$
+\end_inset
+
+ we can solve for 
+\begin_inset Formula $\boldsymbol{\omega}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\omega_{x}\\
+\omega_{y}\\
+\omega_{z}
+\end{array}\right)=\left(\begin{array}{c}
+s\theta_{p}\dot{\theta}_{r}+\dot{\theta}_{y}\\
+-c\theta_{p}s\theta_{y}\dot{\theta}_{r}+c\theta_{y}\dot{\theta}_{p}\\
+-c\theta_{p}c\theta_{y}\dot{\theta}_{r}+s\theta_{y}\dot{\theta}_{p}
+\end{array}\right)$
+\end_inset
+
+ which can be factored as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\omega}=\left(\begin{array}{ccc}
+s\theta_{p} & 0 & 1\\
+-c\theta_{p}s\theta_{y} & c\theta_{y} & 0\\
+c\theta_{p}c\theta_{y} & s\theta_{y} & 0
+\end{array}\right)\left(\begin{array}{c}
+\dot{\theta}_{r}\\
+\dot{\theta}_{p}\\
+\dot{\theta}_{y}
+\end{array}\right)$
+\end_inset
+
+ and as: 
+\begin_inset Formula $\boldsymbol{\omega}=\boldsymbol{A}\left(\boldsymbol{\Gamma}\right)\dot{\boldsymbol{\Gamma}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The analytical Jacobian is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}_{a}\left(\boldsymbol{q}\right)=\left(\begin{array}{cc}
+\boldsymbol{I}_{3\times3} & 0\\
+0 & \boldsymbol{A}^{-1}\left(\boldsymbol{\Gamma}\right)
+\end{array}\right)\boldsymbol{J}\left(\boldsymbol{q}\right)$
+\end_inset
+
+ provided that 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ is not singular.
+ 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ is singular when 
+\begin_inset Formula $\cos\phi=0$
+\end_inset
+
+ or pitch angle 
+\series bold
+
+\begin_inset Formula $\phi=\pm\pi/2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Another useful analytical Jacobian expresses angular rates as the rate
+ of change of exponential coordinates 
+\begin_inset Formula $\boldsymbol{s}=\hat{\boldsymbol{\upsilon}}\theta\in\boldsymbol{so}(3)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\omega}=\boldsymbol{A}(\boldsymbol{s})\dot{\boldsymbol{s}}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{A}(s)=\boldsymbol{I}-(1-\cos\theta)\left[\hat{\boldsymbol{\upsilon}}\right]_{\times}/\theta+(\theta-\sin\theta)\left[\hat{\boldsymbol{\upsilon}}\right]_{\times}^{2}/\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and 
+\begin_inset Formula $\hat{\boldsymbol{\upsilon}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta$
+\end_inset
+
+ can be determined from the end-effector rotation matrix via the matrix
+ logarithm
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.2.
+ Jacobian Condition and Manipulability
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\boldsymbol{J}(\boldsymbol{q})^{-1}\boldsymbol{v}$
+\end_inset
+
+ provided that 
+\begin_inset Formula $\boldsymbol{J}$
+\end_inset
+
+is square and nonsingular.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.2.1.
+ Jacobian Singularities
+\end_layout
+
+\begin_layout Standard
++ A robot configuration 
+\begin_inset Formula $\boldsymbol{q}$
+\end_inset
+
+at which 
+\begin_inset Formula $\det\left(\boldsymbol{J}(\boldsymbol{q})\right)=0$
+\end_inset
+
+ is described as singular or degenterate.
+ Singularities occur when the robot is at maximum reach or when one or more
+ axes become aligned resulting in the loss of degrees of freedom – the gimbal
+ lock problem again.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.2.2.
+ Manipulability
+\end_layout
+
+\begin_layout Standard
++ Consider the set of generalized joint velocities with a unit norm:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}^{T}\dot{\boldsymbol{q}}=1$
+\end_inset
+
+ which lie on the surface of a hypersphere in the N-dimensional joint velocity
+ space.
+\end_layout
+
+\begin_layout Standard
++ Substituting:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{v}^{T}\left(\boldsymbol{J}(\boldsymbol{q})\boldsymbol{J}(\boldsymbol{q})^{T}\right)^{-1}\boldsymbol{v}=1$
+\end_inset
+
+ which is the equation of points on the surface of an ellipsoid within the
+ dim T-dimensional end-effector velocity space.
+ 
+\end_layout
+
+\begin_layout Standard
++ Manipulability is a succinct scalar measure that describes how spherical
+ the ellipsoid is, for instance the ratio of the smallest to the largest
+ radius.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m=\sqrt{\det\left(\boldsymbol{JJ}^{T}\right)}$
+\end_inset
+
+ which is proportional to the volume of the ellipsoid
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.3.
+ Resolved-Rate Motion Control
+\end_layout
+
+\begin_layout Standard
++ Resolved-rate motion control is a simple and elegant algorithm to generate
+ straight line motion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\boldsymbol{J}(\boldsymbol{q})^{-1}\boldsymbol{v}$
+\end_inset
+
+ to map or resolve desired Cartesian velocity to joint velocity without
+ explicitly requiring inverse kinematics.
+\end_layout
+
+\begin_layout Standard
++ The motion control scheme is typically implemented in discrete-time form
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}^{*}\left\langle k\right\rangle =\boldsymbol{J}(\boldsymbol{q}\left\langle k\right\rangle )^{-1}\boldsymbol{v}^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}^{*}\left\langle k+1\right\rangle \leftarrow\boldsymbol{q}\left\langle k\right\rangle +\delta_{t}\dot{\boldsymbol{q}}^{*}\left\langle k\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\delta_{t}$
+\end_inset
+
+ is the sample interval.
+\end_layout
+
+\begin_layout Standard
+- The first equation computes the required joint velocity as a function
+ of the current joint configuration and the desired end-effector velocity
+ 
+\begin_inset Formula $\boldsymbol{v}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+- The second performs forward rectangular integration to give the desired
+ joint angles for the next time step, 
+\begin_inset Formula $\boldsymbol{q}^{*}\left\langle k+1\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The approach just described, based purely on integration, suffers from
+ an accumulation of error which we observed as the unwanted x- and z-direction
+ motion We can eliminate this by changing the algorithm to a closed-loop
+ form based on the difference between the desired and actual pose:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}^{*}\left\langle k\right\rangle \leftarrow K_{p}\boldsymbol{J}\left(\boldsymbol{q}\left\langle k\right\rangle \right)^{-1}\Delta\left(K\left(\boldsymbol{q}\left\langle k\right\rangle \right),\xi^{*}\left\langle k\right\rangle \right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $K_{p}$
+\end_inset
+
+ is a proportional gain, 
+\begin_inset Formula $\Delta(.)\in\mathbb{R}^{6}$
+\end_inset
+
+ is a spatial displacement and the desired pose 
+\begin_inset Formula $\xi^{*}\left\langle k\right\rangle $
+\end_inset
+
+ is a function of time.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.3.1.
+ Jacobian Singularity
+\end_layout
+
+\begin_layout Standard
++ For the case of a square Jacobian where det(J(q)) = 0 we cannot solve
+ Jacobian equation.
+ One strategy to deal with singularity is to replace the inverse with the
+ damped inverse
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\left(\boldsymbol{J}(\boldsymbol{q})+\lambda\boldsymbol{I}\right)^{-1}\boldsymbol{v}$
+\end_inset
+
+ where 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is a small constant added to the diagonal.
+\end_layout
+
+\begin_layout Standard
++ An alternative is to use the pseudo-inverse of the Jacobian 
+\begin_inset Formula $\boldsymbol{J}^{+}$
+\end_inset
+
+ which has the property
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}^{+}\boldsymbol{J}=\boldsymbol{I}$
+\end_inset
+
+ just as the inverse does.
+ It is defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}^{+}=\left(\boldsymbol{J}^{T}\boldsymbol{J}\right)^{-1}\boldsymbol{J}^{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The solution: 
+\begin_inset Formula $\dot{\boldsymbol{q}}=\boldsymbol{J}(\boldsymbol{q})^{+}\boldsymbol{v}$
+\end_inset
+
+ provides a least-squares solution for which 
+\begin_inset Formula $\left\Vert \boldsymbol{J}\dot{\boldsymbol{q}}-\boldsymbol{v}\right\Vert $
+\end_inset
+
+ is smallest
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.4.
+ Under-and Over-Actuated Manipulators
+\end_layout
+
+\begin_layout Standard
+So far we have assumed that the Jacobian is square.
+ For the nonsquare cases it is helpful to consider the velocity relationship
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{v}=\boldsymbol{J}(\boldsymbol{q})\dot{\boldsymbol{q}}$
+\end_inset
+
+ in the diagrammatic form shown in Fig 8.2.
+ The Jacobian is a 
+\begin_inset Formula $6\times N$
+\end_inset
+
+ matrix, the joint velocity is an N-vector, and 
+\begin_inset Formula $\boldsymbol{v}$
+\end_inset
+
+is a 6-vector
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 85
+
+\end_inset
+
+ Fig 8.2
+\end_layout
+
+\begin_layout Standard
++ The case of 
+\begin_inset Formula $N<6$
+\end_inset
+
+ is referred to as an under-actuated robot, and 
+\begin_inset Formula $N>6$
+\end_inset
+
+ is over-actuated or redundant.
+ The under-actuated case cannot be solved because the system of equations
+ is under-constrained but the system can be 
+\emph on
+squared up
+\emph default
+ by deleting some rows of 
+\begin_inset Formula $\boldsymbol{v}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{J}$
+\end_inset
+
+ – accepting that some Cartesian degrees of freedom are not controllable
+ given the low number of joints.
+ For the over-actuated case the system of equations is under-constrained
+ and the best we can do is find a least-squares solution as described in
+ the previous section.
+ Alternatively we can 
+\emph on
+square up
+\emph default
+ the Jacobian to make it invertible by deleting some columns – effectively
+ 
+\emph on
+locking
+\emph default
+ the corresponding joints.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.4.1.
+ Jacobian for Under-Actuated Robot
+\end_layout
+
+\begin_layout Standard
++ An under-actuated robot has 
+\begin_inset Formula $N<6$
+\end_inset
+
+, and a Jacobian that is taller than it is wide.
+\end_layout
+
+\begin_layout Standard
++ We have to confront the reality that we have only two degrees of freedom
+ which we will use to control just 
+\begin_inset Formula $v_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{y}$
+\end_inset
+
+.
+ Rewrite:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+v_{x}\\
+\lfloor v_{y}\\
+v_{z}\\
+\omega_{x}\\
+\omega_{y}\\
+\omega_{z}
+\end{array}\right)=\left(\begin{array}{c}
+\lfloor J_{xy}\\
+J_{0}
+\end{array}\right)\left(\begin{array}{c}
+\dot{q}_{1}\\
+\dot{q}_{2}
+\end{array}\right)$
+\end_inset
+
+ and taking the top partition, the fi rst two rows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+v_{x}\\
+v_{y}
+\end{array}\right)=\boldsymbol{J}_{xy}\left(\begin{array}{c}
+\dot{q}_{1}\\
+\dot{q}_{2}
+\end{array}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{J}_{xy}$
+\end_inset
+
+ is a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ matrix.
+ Invert:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\dot{q}_{1}\\
+\dot{q}_{2}
+\end{array}\right)=\boldsymbol{J}_{xy}^{-1}\left(\begin{array}{c}
+v_{x}\\
+v_{y}
+\end{array}\right)$
+\end_inset
+
+ which can solve if 
+\begin_inset Formula $\det(\boldsymbol{J}_{xy})\ne0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.4.2.
+ Jacobian for Over-Actuated Robot
+\end_layout
+
+\begin_layout Standard
++ An over-actuated or redundant robot has 
+\begin_inset Formula $N>6$
+\end_inset
+
+, and a Jacobian that is wider than it is tall.
+ In this case, use the left pseudo-inverse
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\boldsymbol{J}(\boldsymbol{q})^{+}\boldsymbol{v}$
+\end_inset
+
+ which, of the infi nite number of solutions possible, will yield the one
+ for which, 
+\begin_inset Formula $\left\Vert \dot{\boldsymbol{q}}\right\Vert $
+\end_inset
+
+ is smallest – the minimum-norm solution.
+\end_layout
+
+\begin_layout Standard
++ In the case of a Jacobian matrix any joint velocity that is a linear combinati
+on of its null-space vectors will result in no end-effector motion.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\boldsymbol{J}(\boldsymbol{q})^{+}\boldsymbol{v}+\boldsymbol{NN}^{+}\dot{\boldsymbol{q}}_{null}$
+\end_inset
+
+ (end-effector motion + null-space motion)
+\end_layout
+
+\begin_layout Standard
+where the matrix 
+\begin_inset Formula $\boldsymbol{NN}^{+}\in\mathbb{R}^{N\times N}$
+\end_inset
+
+ projects the desired joint motion into the null space so that it will not
+ affect the end-effector Cartesian motion, allowing the two motions to be
+ superimposed.
+\end_layout
+
+\begin_layout Standard
+Null-space motion can be used for highly-redundant robots to avoid collisions
+ between the links and obstacles (including other links), or to keep joint
+ coordinates away from their mechanical limit stops.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.5.
+ Force Relationships
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{W}=(f_{x},f_{y},f_{z},m_{x},m_{y},m_{z})\in\mathbb{R}^{6}$
+\end_inset
+
+ which are a vector of forces and moments.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.5.1.
+ Transforming Wrenches to Joint Space
+\end_layout
+
+\end_body
+\end_document
