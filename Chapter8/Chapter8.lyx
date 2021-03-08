@@ -968,5 +968,183 @@ Null-space motion can be used for highly-redundant robots to avoid collisions
  Numerical Inverse Kinematics
 \end_layout
 
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 8.3
+\end_layout
+
+\begin_layout Standard
++ The principle is shown in Fig.
+ 8.3 where the robot in its current configuration is drawn solidly and the
+ desired configuration is faint.
+ From the overlaid pose graph the error between actual 
+\begin_inset Formula $\xi_{E}$
+\end_inset
+
+ and desired pose 
+\begin_inset Formula $\xi_{E}^{∗}$
+\end_inset
+
+ is 
+\begin_inset Formula $\xi\Delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{\Delta}^{E}=\Delta\left(\xi_{E},\xi_{E}^{*}\right)=\left(\boldsymbol{t},\hat{\boldsymbol{v}}\theta\right)\in\mathbb{R}^{6}$
+\end_inset
+
+ where the current pose is computed using forward kinematics 
+\begin_inset Formula $\xi_{E}=K(\boldsymbol{q})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Imagine a 
+\emph on
+special
+\emph default
+ spring between the end-effector of the two poses which is pulling (and
+ twisting) the robot’s end-effector toward the desired pose with a wrench
+ proportional to the spatial displacement.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{W}^{E}=\gamma\boldsymbol{\Delta}^{E}$
+\end_inset
+
+ which is resolved to generalized joint forces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{Q}=\boldsymbol{J}^{E}(\boldsymbol{q})^{T}\boldsymbol{W}^{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Assume that this virtual robot has no joint motors only viscous dampers
+ so the joint velocity will be proportional to the applied forces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\boldsymbol{Q}/B$
+\end_inset
+
+ where B is the joint damping coefficient (assuming all dampers are the
+ same).
+\end_layout
+
+\begin_layout Standard
++ Putting all this together:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\dot{\boldsymbol{q}}=\frac{1}{B}\boldsymbol{J}(\boldsymbol{q})^{T}\Delta\left(K(\boldsymbol{q}),\xi_{E}^{*}\right)$
+\end_inset
+
+ which gives the joint velocities that will drive the forward kinematic
+ solution toward the desired end-effector pose.
+ 
+\end_layout
+
+\begin_layout Standard
++ Solved iteratively by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\delta_{q}\left\langle k\right\rangle =\alpha\boldsymbol{J}\left(\boldsymbol{q}\left\langle k\right\rangle \right)^{T}\Delta\left(K\left(\boldsymbol{q}\left\langle k\right\rangle \right),\xi_{E}^{*}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{q}\left\langle k+1\right\rangle \leftarrow\boldsymbol{q}\left\langle k\right\rangle +\xi_{q}\left\langle k\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+until the norm of the update 
+\begin_inset Formula $\left\Vert \delta_{q}\left\langle k\right\rangle \right\Vert $
+\end_inset
+
+ is sufficiently small and where 
+\begin_inset Formula $\alpha>0$
+\end_inset
+
+ is a well-chosen constant.
+ 
+\end_layout
+
+\begin_layout Standard
++ In practice however this algorithm is slow to converge and very sensitive
+ to the choice of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ More practically we can formulate this as a least-squares problem in the
+ world coordinate frame and minimize the scalar cost:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $E=\boldsymbol{\Delta}^{T}\boldsymbol{M\Delta}$
+\end_inset
+
+where
+\begin_inset Formula $\boldsymbol{M}=\text{diag}(\boldsymbol{m})\in\mathbb{R}^{6\times6}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{m}$
+\end_inset
+
+ is the mask vector.
+ The update becomes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\delta_{q}\left\langle k\right\rangle =\left(\boldsymbol{J}\left(\boldsymbol{q}\left\langle k\right\rangle \right)^{T}\boldsymbol{MJ}\left(\boldsymbol{q}\left\langle k\right\rangle \right)\right)^{-1}\boldsymbol{J}\left(\boldsymbol{q}\left\langle k\right\rangle \right)^{T}\boldsymbol{M}\Delta\left(K\left(\boldsymbol{q}\left\langle k\right\rangle \right),\xi_{E}^{*}\right)$
+\end_inset
+
+ which is much faster to converge but can behave poorly near singularities.
+ 
+\end_layout
+
+\begin_layout Standard
++ We remedy this by introducing a damping constant 
+\begin_inset Formula $\lambda$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\delta_{q}\left\langle k\right\rangle =\left(\boldsymbol{J}\left(\boldsymbol{q}\left\langle k\right\rangle \right)^{T}\boldsymbol{MJ}\left(\boldsymbol{q}\left\langle k\right\rangle \right)+\lambda\boldsymbol{I}_{N\times N}\right)^{-1}\boldsymbol{J}\left(\boldsymbol{q}\left\langle k\right\rangle \right)^{T}\boldsymbol{M}\Delta\left(K\left(\boldsymbol{q}\left\langle k\right\rangle \right),\xi_{E}^{*}\right)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+which ensures that the term being inverted can never be singular.
+\end_layout
+
 \end_body
 \end_document

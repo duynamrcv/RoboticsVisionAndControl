@@ -873,5 +873,100 @@ Null-space motion can be used for highly-redundant robots to avoid collisions
  Transforming Wrenches to Joint Space
 \end_layout
 
+\begin_layout Standard
++ The manipulator Jacobian transforms joint velocity to an end-effector
+ spatial velocity and the Jacobian transpose transforms a wrench applied
+ at the end-effector to torques and forces experienced at the joints
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{Q}=\boldsymbol{J}^{0}(\boldsymbol{q})^{T}\boldsymbol{W}^{0}$
+\end_inset
+
+ where 
+\series bold
+
+\begin_inset Formula $\boldsymbol{W}$
+\end_inset
+
+
+\series default
+ is a wrench in the world coordinate frame and 
+\begin_inset Formula $\boldsymbol{Q}$
+\end_inset
+
+ is the generalized joint force vector.
+ The elements of 
+\begin_inset Formula $\boldsymbol{Q}$
+\end_inset
+
+ are joint torque or force for revolute or prismatic joints respectively.
+ 
+\end_layout
+
+\begin_layout Standard
++ The mapping for velocity, from end-effector to joints, involves the inverse
+ Jacobian which can potentially be singular.
+ The mapping of forces and torques, from end-effector to joints, is different
+ – it involves the transpose of the Jacobian which can never be singular.
+ 
+\end_layout
+
+\begin_layout Standard
++ If the wrench is defined in the end-effector coordinate frame then we
+ use instead
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{Q}=\boldsymbol{J}^{E}(\boldsymbol{q})^{T}\boldsymbol{W}^{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.5.2.
+ Force Ellipsoids
+\end_layout
+
+\begin_layout Standard
++ Perform a similar analysis for the forces and torques at the end-effector
+ – the end-effector wrench.
+ We start with a set of generalized joint forces with a unit norm
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{Q}^{T}\boldsymbol{Q}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{W}^{T}\left(\boldsymbol{J}(q)\boldsymbol{J}(q)^{T}\right)\boldsymbol{W}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The force and velocity ellipsoids provide complementary information about
+ how well suited the configuration of the arm is to a particular task.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.6.
+ Inverse Kinematics: a General Numerical Approach
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+8.6.1.
+ Numerical Inverse Kinematics
+\end_layout
+
 \end_body
 \end_document

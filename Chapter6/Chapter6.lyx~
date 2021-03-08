@@ -288,5 +288,644 @@ independent
 .
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+6.1.2.
+ Estimating Pose
+\end_layout
+
+\begin_layout Standard
++ The problem: how to estimate our new pose given the previous pose and
+ noisy odometry: Kalman filter.
+ This filter provides the optimal estimate of the system state, vehicle
+ configuration in this case, assuming that the noise is zero-mean and Gaussian.
+ The Kalman filter is formulated for linear systems but our model of the
+ vehicle’s motion is nonlinear – the tool of choice is the extended Kalman
+ filter ( EKF).
+\end_layout
+
+\begin_layout Standard
++ The vehicle's configuration:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}=\left(x_{v},y_{v},\theta_{v}\right)^{T}$
+\end_inset
+
+ and the prediction equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle =\boldsymbol{f}\left(\hat{\boldsymbol{x}}\left\langle k\right\rangle ,\hat{\boldsymbol{u}}\left\langle k\right\rangle \right)\\
+\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle =\boldsymbol{F}_{x}\hat{\boldsymbol{P}}\left\langle k\right\rangle \boldsymbol{F}_{x}^{T}+\boldsymbol{F}_{v}\hat{\boldsymbol{V}}\boldsymbol{F}_{v}^{T}
+\end{array}$
+\end_inset
+
+ describe how the state and covariance evolve with time.
+ The term 
+\begin_inset Formula $\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle $
+\end_inset
+
+ indicates an estimate of 
+\begin_inset Formula $x$
+\end_inset
+
+ at time 
+\begin_inset Formula $k+1$
+\end_inset
+
+ based on information up to, and including, time 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\hat{\boldsymbol{u}}\left\langle k\right\rangle $
+\end_inset
+
+ is the input to the process, which in this case is the measured odometry,
+ so 
+\begin_inset Formula $\hat{\boldsymbol{u}}\left\langle k\right\rangle =\delta\left\langle k\right\rangle $
+\end_inset
+
+.
+ 
+\begin_inset Formula $\hat{\boldsymbol{P}}\in\mathbb{R}^{3\times3}$
+\end_inset
+
+ is a covariance matrix representing uncertainty in the estimated vehicle
+ configuration.
+\begin_inset Formula $\hat{\boldsymbol{V}}$
+\end_inset
+
+ is our estimate of the covariance of the odometry noise which in reality
+ we do not know.
+\end_layout
+
+\begin_layout Standard
++ 
+\begin_inset Formula $F_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{v}$
+\end_inset
+
+ are Jacobian matrices – the vector version of a derivative.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{F}_{x}=\frac{\partial\boldsymbol{f}}{\text{\ensuremath{\partial\boldsymbol{x}}}}(\boldsymbol{\upsilon}=0)=\left(\begin{array}{ccc}
+1 & 0 & -\delta_{d}\sin\theta_{v}\\
+0 & 1 & \delta_{d}\cos\theta_{v}\\
+0 & 0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{F}_{v}=\frac{\partial\boldsymbol{f}}{\text{\ensuremath{\partial\boldsymbol{\upsilon}}}}(\boldsymbol{\upsilon}=0)=\left(\begin{array}{cc}
+\cos\theta_{v} & 0\\
+\sin\theta_{v} & 0\\
+0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which are functions of the current state and odometry.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.2.
+ Localizing with a Map
+\end_layout
+
+\begin_layout Standard
++ The robot is equipped with a sensor that provides observations of the
+ landmarks 
+\emph on
+with respect to the robot
+\emph default
+ as described by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{z}=\boldsymbol{h}\left(\boldsymbol{x},\boldsymbol{p}_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{x}=(x_{v},y_{v},\theta_{v})^{T}$
+\end_inset
+
+ is the vehicle state, and 
+\begin_inset Formula $\boldsymbol{p}_{i}=(x_{i},y_{i})^{T}$
+\end_inset
+
+ is the 
+\emph on
+known
+\emph default
+ location of the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ landmark in the world frame.
+\end_layout
+
+\begin_layout Standard
++ The sensor is mounted onboard the robot so the observation of the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ landmark is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{z}=\boldsymbol{h}\left(\boldsymbol{x},\boldsymbol{p}_{i}\right)=\left(\begin{array}{c}
+\sqrt{\left(y_{i}-y_{v}\right)^{2}+\left(x_{i}-x_{v}\right)^{2}}\\
+\tan^{-1}\left(y_{i}-y_{v}\right)/\left(x_{i}-x_{v}\right)-\theta_{v}
+\end{array}\right)+\left(\begin{array}{c}
+w_{r}\\
+w_{\beta}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{z}=(r,\beta)$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+ is the range, 
+\begin_inset Formula $\beta$
+\end_inset
+
+ the bearing angle, and 
+\begin_inset Formula $\boldsymbol{\omega}=(w_{r},w_{\beta})^{T}$
+\end_inset
+
+ is a zeromean Gaussian random variable that models errors in the sensor
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+w_{r}\\
+w_{\beta}
+\end{array}\right)\sim N(0,\boldsymbol{W}),\boldsymbol{W}=\left(\begin{array}{cc}
+\sigma_{r}^{2} & 0\\
+0 & \sigma_{\beta}^{2}
+\end{array}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The constant diagonal covariance matrix indicates that range and bearing
+ errors are independent.
+\end_layout
+
+\begin_layout Standard
++ Any difference between the observation z# and the estimated observation
+ indicates an error in the robot’s pose estimate 
+\begin_inset Formula $\hat{\boldsymbol{x}}$
+\end_inset
+
+ – it isn’t where it 
+\emph on
+thought
+\emph default
+ it was.
+ However this 
+\emph on
+difference
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{v}=\boldsymbol{z}^{\#}\left\langle k+1\right\rangle -\boldsymbol{h}\left(\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle ,\boldsymbol{p}_{i}\right)$
+\end_inset
+
+ has real value and is key to the operation of the Kalman filter.
+\end_layout
+
+\begin_layout Standard
++ The predicted state is update by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{x}}\left\langle k+1\right\rangle =\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle +\boldsymbol{Kv}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{P}}\left\langle k+1\right\rangle =\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle -\boldsymbol{K}\boldsymbol{H}_{x}\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which are the Kalman filter update equations.
+ These take the 
+\emph on
+predicted
+\emph default
+ values for the next time step denoted with the 
+\begin_inset Formula $+$
+\end_inset
+
+ and compute the optimal estimate by applying landmark measurements from
+ time step 
+\begin_inset Formula $k+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The innovation is added to the estimated state after multiplying by the
+ Kalman gain matrix K which is defined as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{K}=\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle \boldsymbol{H}_{x}^{T}\boldsymbol{S}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{S}=\boldsymbol{H}_{x}\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle \boldsymbol{H}_{x}^{T}+\boldsymbol{H}_{w}\hat{\boldsymbol{W}}\boldsymbol{H}_{w}^{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\hat{\text{\ensuremath{\boldsymbol{W}}}}$
+\end_inset
+
+ is the estimated covariance of the sensor noise and 
+\begin_inset Formula $\boldsymbol{H}_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{H}_{w}$
+\end_inset
+
+ are Jacobians
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{H}_{w}=\frac{\partial\boldsymbol{h}}{\partial\boldsymbol{\omega}}(\boldsymbol{\omega}=0)=\left(\begin{array}{cc}
+1 & 0\\
+0 & 1
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The EKF comprises two phases: prediction and update, and these are summarized
+ in Fig.
+ 6.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 6.1
+\end_layout
+
+\begin_layout Standard
++ EKF framework allows data from many and varied sensors to update the state
+ which is why the estimation problem is also referred to as sensor fusion.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.3.
+ Creating a Map
+\end_layout
+
+\begin_layout Standard
++ The state vector comprises the estimated coordinates of the M landmarks
+ that have been observed so far
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{x}}=\left(x_{1},y_{1},x_{2},y_{2},...,x_{M},y_{M}\right)^{T}\in\mathbb{R}^{2M\times1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The corresponding estimated covariance 
+\begin_inset Formula $\hat{\boldsymbol{P}}$
+\end_inset
+
+ will be a 
+\begin_inset Formula $2M\times2M$
+\end_inset
+
+ matrix.
+ The state vector has a variable length since we do not know in advance
+ how many landmarks exist in the environment.
+ Initially 
+\begin_inset Formula $M=0$
+\end_inset
+
+ and is incremented every time a previously unseen landmark is observed.
+\end_layout
+
+\begin_layout Standard
++ The prediction equation is straightforward in this case since the landmarks
+ are assumed to be stationary
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{x}}^{+}\left\langle k+1\right\rangle =\hat{\boldsymbol{x}}\left\langle k\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{P}}^{+}\left\langle k+1\right\rangle =\hat{\boldsymbol{P}}\left\langle k\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The function 
+\begin_inset Formula $\boldsymbol{g}(.)$
+\end_inset
+
+ which is the inverse of 
+\begin_inset Formula $\boldsymbol{h}(.)$
+\end_inset
+
+ and gives the coordinates of the observed landmark based on the known vehicle
+ pose and the sensor observation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{g}\left(\boldsymbol{x},\boldsymbol{z}\right)=\left(\begin{array}{c}
+x_{v}+r\cos\left(\theta_{v}+\beta\right)\\
+y_{v}+r\sin\left(\theta_{v}+\beta\right)
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $\hat{\boldsymbol{x}}$
+\end_inset
+
+ has a variable length we need to extend the state vector and the covariance
+ matrix whenever we encounter a landmark we have not previously seen.
+ The state vector is extended by the function 
+\begin_inset Formula $\boldsymbol{y}(.)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}\left\langle k\right\rangle '=\boldsymbol{y}\left(\boldsymbol{x}\left\langle k\right\rangle ,\boldsymbol{z}\left\langle k\right\rangle ,\boldsymbol{x}_{v}\left\langle k\right\rangle \right)=\left(\begin{array}{c}
+\boldsymbol{x}\left\langle k\right\rangle \\
+\boldsymbol{g}\left(\boldsymbol{x}_{v}\left\langle k\right\rangle ,\boldsymbol{z}\left\langle k\right\rangle \right)
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which appends the sensor-based estimate of the new landmark’s coordinates
+ to those already in the map.
+ The order of feature coordinates within 
+\begin_inset Formula $\hat{\boldsymbol{x}}$
+\end_inset
+
+ therefore depends on the order in which they are observed.
+\end_layout
+
+\begin_layout Standard
++ The covariance matrix also needs to be extended when a new landmark is
+ observed and this is achieved by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{P}}\left\langle k\right\rangle '=\boldsymbol{Y}_{z}\left(\begin{array}{cc}
+\hat{\boldsymbol{P}}\left\langle k\right\rangle  & 0\\
+0 & \hat{\boldsymbol{W}}
+\end{array}\right)\boldsymbol{Y}_{z}^{T}$
+\end_inset
+
+ where 
+\series bold
+
+\begin_inset Formula $\boldsymbol{Y}_{z}$
+\end_inset
+
+ 
+\series default
+is the insertion Jacobian
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{Y}_{z}=\frac{\partial\boldsymbol{y}}{\partial\boldsymbol{z}}=\left(\begin{array}{ccc}
+\boldsymbol{I}_{n\times n} &  & 0_{n\times2}\\
+\boldsymbol{G}_{x} & 0_{2\times n-3} & \boldsymbol{G}_{z}
+\end{array}\right)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+that relates the rate of change of the extended state vector to the new
+ observation.
+ 
+\begin_inset Formula $n$
+\end_inset
+
+ is the dimension of 
+\begin_inset Formula $\hat{\boldsymbol{P}}$
+\end_inset
+
+ prior to it being extended and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{G}_{x}=\frac{\partial\boldsymbol{g}}{\partial\boldsymbol{x}}=\left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{G}_{z}=\frac{\partial\boldsymbol{g}}{\partial\boldsymbol{z}}=\left(\begin{array}{cc}
+\cos\left(\theta_{v}+\beta\right) & -r\sin\left(\theta_{v}+\beta\right)\\
+\sin\left(\theta_{v}+\beta\right) & r\cos\left(\theta_{v}+\beta\right)
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $G_{x}$
+\end_inset
+
+ is zero since 
+\begin_inset Formula $g(.)$
+\end_inset
+
+ is independent of the map in 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+.
+ An additional Jacobian for 
+\begin_inset Formula $\boldsymbol{h}(.)$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{H}_{p_{i}}=\frac{\partial\boldsymbol{h}}{\partial\boldsymbol{p}_{i}}=\left(\begin{array}{cc}
+\frac{x_{i}-x_{v}}{r} & \frac{y_{i}-y_{v}}{r}\\
+-\frac{y_{i}-y_{v}}{r^{2}} & \frac{x_{i}-x_{v}}{r^{2}}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which describes how the landmark observation changes with respect to landmark
+ position for a particular robot pose.
+\end_layout
+
+\begin_layout Standard
++ The observation depends only on the position of that landmark so this
+ Jacobian is mostly zeros
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{H}_{x}=\frac{\partial\boldsymbol{h}}{\partial\boldsymbol{x}}(\boldsymbol{\omega}=0)=\left(0...\boldsymbol{H}_{p_{i}}...0\right)\in\mathbb{R}^{2\times2M}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{H}_{p_{i}}$
+\end_inset
+
+ is at the location in the vector corresponding to the state 
+\begin_inset Formula $\boldsymbol{p}_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.4.
+ Loalization and Mapping 
+\end_layout
+
+\begin_layout Standard
++ The state vector comprises the vehicle configuration and the coordinates
+ of the 
+\begin_inset Formula $M$
+\end_inset
+
+ landmarks that have been observed so far
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{x}}=\left(x_{v},y_{v},\theta_{v},x_{1},y_{1},x_{2},y_{2},...,x_{M},y_{M}\right)^{T}\in\mathbb{R}^{2M+3\times1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The estimated covariance is a 
+\begin_inset Formula $(2M+3)×(2M+3)$
+\end_inset
+
+ matrix and has the structure
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{P}}=\left(\begin{array}{cc}
+\hat{\boldsymbol{P}}_{vv} & \hat{\boldsymbol{P}}_{vm}\\
+\hat{\boldsymbol{P}}_{vm}^{T} & \hat{\boldsymbol{P}}_{mm}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\hat{\boldsymbol{P}}_{vv}$
+\end_inset
+
+is the covariance of the vehicle pose, 
+\begin_inset Formula $\hat{\boldsymbol{P}}_{mm}$
+\end_inset
+
+ the covariance of the map landmark positions, and 
+\begin_inset Formula $\hat{\boldsymbol{P}}_{vm}$
+\end_inset
+
+ is the correlation between vehicle and landmark states.
+\end_layout
+
 \end_body
 \end_document
