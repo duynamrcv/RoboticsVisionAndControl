@@ -1003,5 +1003,634 @@ every
  Rao-Blackwellized SLAM
 \end_layout
 
+\begin_layout Standard
++ If there are 
+\begin_inset Formula $M$
+\end_inset
+
+ hypotheses the overall computational burden falls from 
+\begin_inset Formula $O(N^{2})$
+\end_inset
+
+ for the EKF SLAM case to 
+\begin_inset Formula $O(M\log N)$
+\end_inset
+
+ and in practice works well for 
+\begin_inset Formula $M$
+\end_inset
+
+ in the order of tens to hundreds but can work for a value as low as 
+\begin_inset Formula $M=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.6.
+ Pose Graph SLAM
+\end_layout
+
+\begin_layout Standard
++ When it makes a measurement of node 1 a constraint is added – the dashed
+ edge – indicating that the nodes are closer than the estimated relative
+ pose based on the chain of relative poses from odometry: 
+\begin_inset Formula $\xi_{2}^{1\#}\oplus\xi_{3}^{2\#}\oplus\xi_{4}^{3\#}$
+\end_inset
+
+.
+ The back-end algorithm will then 
+\emph on
+pull
+\emph default
+ all the nodes closer to their correct pose.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 6.2
+\end_layout
+
+\begin_layout Standard
++ The first step is to express the error associated with the graph edge
+ in terms of the sensor measurement and our best estimates of the node poses
+ with respect to the world frame
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\xi_{\varepsilon}=\ominus\xi_{j}^{i\#}\ominus\hat{\xi}_{i}^{0}\oplus\hat{\xi}_{j}^{0}\in\boldsymbol{SE}(2)$
+\end_inset
+
+ which is ideally zero.
+\end_layout
+
+\begin_layout Standard
++ We can formulate this as a minimization problem and attempt to find the
+ poses of all the nodes 
+\begin_inset Formula $\boldsymbol{x}={\xi_{1},\xi_{2},...,\xi_{N}}$
+\end_inset
+
+ that minimizes the error across all the edges
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}^{*}=\arg\min_{x}\sum_{k}F_{k}(\boldsymbol{x})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\series bold
+
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+
+\series default
+ is the state of the pose graph and contains the pose of every node, and
+ 
+\begin_inset Formula $F_{k}(\boldsymbol{x})$
+\end_inset
+
+ is a nonnegative scalar cost associated with the edge 
+\begin_inset Formula $k$
+\end_inset
+
+ connecting node 
+\begin_inset Formula $i$
+\end_inset
+
+ to node 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ We convert the edge pose error to a vector representation 
+\begin_inset Formula $\xi_{\varepsilon}\sim(x,y,\theta)$
+\end_inset
+
+ which is a function 
+\begin_inset Formula $\boldsymbol{f}_{k}(\boldsymbol{x})\in\mathbb{R}^{3}$
+\end_inset
+
+ of the state.
+ The scalar cost can be obtained from a quadratic expression
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $F_{k}(\boldsymbol{x})=\boldsymbol{f}_{k}^{T}(\boldsymbol{x})\boldsymbol{\Omega}_{k}\boldsymbol{f}_{k}(\boldsymbol{x})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{\Omega}_{k}$
+\end_inset
+
+ is a positive-definite information matrix used as a weighting term.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+
+\end_inset
+
+ Fig 6.3
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+
+\end_inset
+
+ Fig 6.4
+\end_layout
+
+\begin_layout Standard
++ The edge error 
+\begin_inset Formula $\boldsymbol{f}_{k}(\boldsymbol{x})$
+\end_inset
+
+ can be linearized about the current state 
+\begin_inset Formula $\boldsymbol{x}_{0}$
+\end_inset
+
+ of the pose graph
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{f}'_{k}(\boldsymbol{\Delta})\approx\boldsymbol{f}_{0,k}+\boldsymbol{J}_{k}\boldsymbol{\Delta}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{f}_{0,k}=\boldsymbol{f}_{k}(\boldsymbol{x}_{0})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}_{k}=\partial\boldsymbol{f}_{k}(\boldsymbol{x})/\partial\boldsymbol{x}\in\mathbb{R}^{3\times3N}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+is a Jacobian matrix which depends only on the pose of its two vertices
+ 
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi_{j}$
+\end_inset
+
+ so it is mostly zeros
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}_{k}=\left(0...\boldsymbol{A}_{i}...\boldsymbol{B}_{j}...0\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $\boldsymbol{A}_{i}=\partial\boldsymbol{f}_{k}(\boldsymbol{x})/\partial\xi_{i}\in\mathbb{R}^{3\times3},\boldsymbol{B}_{i}=\partial\boldsymbol{f}_{k}(\boldsymbol{x})/\partial\xi_{j}\in\mathbb{R}^{3\times3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_5.png
+	lyxscale 59
+
+\end_inset
+
+Fig 6.5
+\end_layout
+
+\begin_layout Standard
++ The pose graph can also include landmarks as shown in Fig.
+ 6.6.
+ Landmarks have a position 
+\begin_inset Formula $\boldsymbol{P}_{j}\in\mathbb{R}^{2}$
+\end_inset
+
+ not a pose, and therefore differ from the nodes discussed so far.
+ To accomodate this we redefine the state vector to be 
+\begin_inset Formula $\boldsymbol{x}=\{\xi_{1},\xi_{2},...\xi_{N}|\boldsymbol{P}_{1},\boldsymbol{P}_{2},...,\boldsymbol{P}_{M}\}$
+\end_inset
+
+ which includes 
+\begin_inset Formula $N$
+\end_inset
+
+ robot poses and 
+\begin_inset Formula $M$
+\end_inset
+
+ landmark positions.
+ The robot at pose 
+\begin_inset Formula $i$
+\end_inset
+
+ observes landmark 
+\begin_inset Formula $j$
+\end_inset
+
+ at range and bearing 
+\begin_inset Formula $\boldsymbol{z}^{\#}=(r^{\#},\beta^{\#})$
+\end_inset
+
+ which is converted to Cartesian form in frame 
+\emph on
+{i}
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{P}_{j}^{i\#}=\left(r^{\#}\cos\beta^{\#},r^{\#}\sin\beta^{\#}\right)\in\mathbb{R}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_6.png
+
+\end_inset
+
+ Fig 6.6
+\end_layout
+
+\begin_layout Standard
++ The estimated position of the lenadmark in frame 
+\begin_inset Formula $\{i\}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{\boldsymbol{P}}_{j}^{i}=\left(\ominus\xi_{i}^{0}\right)\bullet\hat{\boldsymbol{P}}_{j}\in\mathbb{R}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the error vector is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{f}_{k}(\boldsymbol{x})=\varepsilon=\hat{\boldsymbol{P}}_{j}^{i}-\boldsymbol{P}_{j}^{i\#}\in\mathbb{R}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ We follow a similar approach as earlier but the Jacobian matrix is now
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{J}_{k}=\partial\boldsymbol{f}_{k}(\boldsymbol{x})/\partial\boldsymbol{x}\in\mathbb{R}^{2\times(3N+2M)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which again is mostly zero but the two nonzero blocks now have different
+ widths
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{A}_{i}=\partial\boldsymbol{f}_{k}(\boldsymbol{x})/\partial\xi_{i}\in\mathbb{R}^{2\times3},\boldsymbol{B}_{i}=\partial\boldsymbol{f}_{k}(\boldsymbol{x})/\partial P_{j}\in\mathbb{R}^{2\times2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.7.
+ Sequential Monte-Carlo Localization
+\end_layout
+
+\begin_layout Standard
+We will apply Monte-Carlo estimation to the problem of localization using
+ odometry and a map.
+ Estimating only three states 
+\begin_inset Formula $\boldsymbol{x}=(x,y,\theta)$
+\end_inset
+
+ is computationally tractable to solve.
+ The estimator is initialized by creating 
+\begin_inset Formula $N$
+\end_inset
+
+ particles 
+\begin_inset Formula $\boldsymbol{x}_{i},i\in[1,N]$
+\end_inset
+
+ distributed randomly over the configuration space of the vehicle.
+ All particles have the same initial weight or likelihood 
+\begin_inset Formula $\boldsymbol{w}_{i}=1/N$
+\end_inset
+
+.
+ The steps in the main iteration of the algorithm are:
+\end_layout
+
+\begin_layout Standard
+1.
+ Apply the state update to each particle
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}_{i}^{+}\left\langle k+1\right\rangle =\boldsymbol{f}\left(\boldsymbol{x}_{i}\left\langle k\right\rangle ,\boldsymbol{u}\left\langle k\right\rangle +\boldsymbol{q}\left\langle k\right\rangle \right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\hat{\boldsymbol{u}}\left\langle k\right\rangle $
+\end_inset
+
+ is the input to the system or the measured odometry 
+\begin_inset Formula $\hat{\boldsymbol{u}}\left\langle k\right\rangle =\delta\left\langle k\right\rangle $
+\end_inset
+
+.
+ We also add a random vector 
+\begin_inset Formula $\boldsymbol{q}\left\langle k\right\rangle $
+\end_inset
+
+ which represents uncertainty in the model or the odometry.
+ Often 
+\begin_inset Formula $\boldsymbol{q}$
+\end_inset
+
+ is drawn from a Gaussian random variable with covariance 
+\begin_inset Formula $\boldsymbol{Q}$
+\end_inset
+
+ but any physically meaningful distribution can be used.
+ The state update is often simplified to
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{x}_{i}^{+}\left\langle k+1\right\rangle =\boldsymbol{f}\left(\boldsymbol{x}_{i}\left\langle k\right\rangle ,\boldsymbol{u}\left\langle k\right\rangle +\boldsymbol{q}\left\langle k\right\rangle \right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{q}\left\langle k\right\rangle $
+\end_inset
+
+ represents uncertainty in the pose of the vehicle.
+\end_layout
+
+\begin_layout Standard
+2.
+ We make an observation 
+\begin_inset Formula $\boldsymbol{z}^{\#}$
+\end_inset
+
+ of landmark 
+\begin_inset Formula $j$
+\end_inset
+
+ which has, according to the map, coordinate 
+\begin_inset Formula $\boldsymbol{p}_{j}$
+\end_inset
+
+.
+ For each particle we compute the innovation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{v}_{i}=\boldsymbol{h}\left(\boldsymbol{x}_{i}^{+},\boldsymbol{p}_{j}\right)-\boldsymbol{z}^{\#}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is the error between the predicted and actual landmark observation.
+ A likelihood function provides a scalar measure of how well the particular
+ particle explains this observation.
+ A likelihood function
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{w}_{i}=e^{-v_{i}^{T}\boldsymbol{L}^{-1}v_{i}}+w_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $w$
+\end_inset
+
+ is referred to as the 
+\emph on
+importance
+\emph default
+ or 
+\emph on
+weight
+\emph default
+ of the particle, 
+\begin_inset Formula $\boldsymbol{L}$
+\end_inset
+
+ is a covariance-like matrix, and 
+\begin_inset Formula $w_{0}>0$
+\end_inset
+
+ ensures that there is a finite probability of a particle being retained
+ despite sensor error.
+ We use a quadratic exponential function only for convenience, the function
+ does not need to be smooth or invertible but only to adequately describe
+ the likelihood of an observation.
+\end_layout
+
+\begin_layout Standard
+3.
+ Select the particles that best explain the observation, a process known
+ as resampling or importance sampling.
+ A common scheme is to randomly select particles according to their weight.
+ Given 
+\begin_inset Formula $N$
+\end_inset
+
+ particles 
+\begin_inset Formula $\boldsymbol{x}_{i}$
+\end_inset
+
+ with corresponding weights 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ we first normalize the weights 
+\begin_inset Formula $w'_{i}=w_{i}/\sum_{i=1}^{N}w_{i}$
+\end_inset
+
+ and construct a cumulative histogram 
+\begin_inset Formula $c_{j}=\sum_{i=1}^{j}w′_{i}$
+\end_inset
+
+.
+ We then draw a uniform random number 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+ and find
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\arg\min_{i}e<c_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where particle 
+\begin_inset Formula $i$
+\end_inset
+
+ is selected for the next generation.
+ The process is repeated 
+\begin_inset Formula $N$
+\end_inset
+
+ times
+\end_layout
+
+\begin_layout Standard
++ These steps are summarized in Fig.
+ 6.7
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_7.png
+
+\end_inset
+
+ Fig 6.7
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+6.8.
+ Application: Scanning Laser Rangefinder
+\end_layout
+
+\begin_layout Standard
++ A scanning laser rangefinder, as shown in Fig 6.8a, contains a rotating
+ laser rangefinder and typically emits a pulse every quarter, half or one
+ degree over an angular range of 180 or 270 degrees and returns a planar
+ cross-section of the world in polar coordinate form 
+\begin_inset Formula $\{(r_{i},\theta_{i}),i\in1,...,N$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_8.png
+	lyxscale 80
+
+\end_inset
+
+Fig 6.8
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Laser Odometry
+\end_layout
+
+\begin_layout Standard
++ A common application of scanning laser rangefinders is laser odometry,
+ estimating the change in robot pose using laser scan data rather than wheel
+ encoder data.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_9.png
+	lyxscale 63
+
+\end_inset
+
+Fig 6.9
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Laser-Based Map Building
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_10.png
+	lyxscale 75
+
+\end_inset
+
+Fig 6.10
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Laser-Based Localization
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \end_body
 \end_document
