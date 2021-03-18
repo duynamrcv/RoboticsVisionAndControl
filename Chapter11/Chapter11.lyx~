@@ -1,0 +1,315 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 11.
+ Image Formation
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.1.
+ Perspective Camera
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.1.1.
+ Perspective Projection
+\end_layout
+
+\begin_layout Standard
++ Fig 11.1a shows that only a small fraction of the light leaving the object
+ finds its way to the image.
+ A pin-hole camera has no focus adjustments – all objects are in focus irrespect
+ive of distance.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.1
+\end_layout
+
+\begin_layout Standard
++ The key to brighter images is to use an objective lens, as shown in Fig.
+ 11.1b
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 75
+
+\end_inset
+
+Fig 11.2
+\end_layout
+
+\begin_layout Standard
++ The z-coordinate of the object and its image, with respect to the lens
+ center, are related by the thin lens equation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{1}{z_{0}}+\frac{1}{z_{i}}=\frac{1}{f}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $z_{0}$
+\end_inset
+
+is the distance to the object, 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+is the distance to the image, 
+\begin_inset Formula $f$
+\end_inset
+
+ is the local length of the lens.
+\end_layout
+
+\begin_layout Standard
++ For 
+\begin_inset Formula $z_{0}>f$
+\end_inset
+
+ an inverted image ofs formed on the image plane at 
+\begin_inset Formula $z_{i}<-f$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ In a camera the image plane is fixed at the surface of the sensor chip.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.3
+\end_layout
+
+\begin_layout Standard
++ In computer vision it is common to use the central perspective imaging
+ model shown in Fig.
+ 11.3.
+ The rays converge on the origin of the camera frame {C} and a noninverted
+ image is 
+\emph on
+projected
+\emph default
+ onto the image plane located at 
+\begin_inset Formula $z=f$
+\end_inset
+
+.
+ The z-axis intersects the image plane at the principal point which is the
+ origin of the 2D image coordinate frame.
+ Using similar triangles we can show that a point at the world coordinates
+ 
+\begin_inset Formula $\boldsymbol{P}=(X,Y,Z)$
+\end_inset
+
+ is projected to the image point 
+\begin_inset Formula $\boldsymbol{p}=(x,y)$
+\end_inset
+
+ by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x=f\frac{X}{Z},y=f\frac{Y}{Z}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is a projective transformation, or more specifi cally a perspective
+ projection.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.1.2.
+ Modeling a Perspective Camera
+\end_layout
+
+\begin_layout Standard
++ The image-plane point coordinates in hemogeneouse form 
+\begin_inset Formula $\tilde{\boldsymbol{p}}=\left(\tilde{x},\tilde{y},\tilde{z}\right)$
+\end_inset
+
+ where
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tilde{x}=fX,\tilde{y}=fY,\tilde{z}=Z$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+or in compact matrix form:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tilde{\boldsymbol{p}}=\left(\begin{array}{ccc}
+f & 0 & 0\\
+0 & f & 0\\
+0 & 0 & 1
+\end{array}\right)\left(\begin{array}{c}
+X\\
+Y\\
+Z
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the nonhomogeneous image-plane coordinates are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x=\frac{\tilde{x}}{\tilde{z}},y=\frac{\tilde{y}}{\tilde{z}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Where 
+\begin_inset Formula $f=1$
+\end_inset
+
+ the coordinates are referred to as the normalized, retinal or canonical
+ image-plane coordinates.
+\end_layout
+
+\begin_layout Standard
++ The world coordinate in homogeneous form: 
+\begin_inset Formula $\tilde{\boldsymbol{P}}^{C}=\left(X,Y,Z,1\right)^{T}$
+\end_inset
+
+, the perspective projection can written in 
+\emph on
+linear form
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tilde{\boldsymbol{p}}=\left(\begin{array}{cccc}
+f & 0 & 0 & 0\\
+0 & f & 0 & 0\\
+0 & 0 & 1 & 0
+\end{array}\right)\tilde{\boldsymbol{P}}^{C}$
+\end_inset
+
+or 
+\begin_inset Formula $\tilde{\boldsymbol{p}}=\boldsymbol{C}\tilde{\boldsymbol{P}}^{C}$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
