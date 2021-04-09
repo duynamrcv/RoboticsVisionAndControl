@@ -455,5 +455,1031 @@ where
  Camera Matrix
 \end_layout
 
+\begin_layout Standard
++ Camera projection in general form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tilde{\boldsymbol{p}}=\left(\begin{array}{ccc}
+1/\rho_{w} & 0 & u_{0}\\
+0 & 1/\rho_{h} & v_{0}\\
+0 & 0 & 1
+\end{array}\right)\left(\begin{array}{cccc}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0
+\end{array}\right)\left(\boldsymbol{T}_{C}^{0}\right)^{-1}\tilde{\boldsymbol{P}}=\boldsymbol{K}\boldsymbol{P}_{0}\boldsymbol{T}_{C}^{0-1}\tilde{\boldsymbol{P}}=\boldsymbol{C}\tilde{\boldsymbol{P}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where all the terms are rolled up into the camera matrix 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The projection can also be written in functional form as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{p}=P\left(\boldsymbol{P},\boldsymbol{K},\boldsymbol{\xi}_{C}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{P}$
+\end_inset
+
+ is the point coordinate vector in thr world frame.
+ 
+\begin_inset Formula $\boldsymbol{K}$
+\end_inset
+
+ is the camera parameter matrix and comprises the intrinsic parameters which
+ are the innate characteristics of the camera and sensor such as 
+\begin_inset Formula $f,\rho_{w},\rho_{h},u_{0},v_{0}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\boldsymbol{\xi}_{C}$
+\end_inset
+
+ is the pose of the camera and comprises a minimum of six parameters – the
+ extrinsic parameters – that describe camera translation and orientation
+ in 
+\begin_inset Formula $\boldsymbol{SE}(3)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ There are 5 intrinsic and 6 extrinsic parameters – a total of 11 independent
+ parameters to describe a camera.
+ The camera matrix has 12 elements so one degree of freedom, the overall
+ scale factor, is unconstrained and can be arbitrarily chosen.
+\end_layout
+
+\begin_layout Standard
+——————–
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The camera matrix 
+\begin_inset Formula $\boldsymbol{C}\subset\mathbb{R}^{3\times4}$
+\end_inset
+
+ has some important structure and properties:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- It can be partitioned 
+\begin_inset Formula $\boldsymbol{C}=\left(\boldsymbol{M}|\boldsymbol{c}_{4}\right)$
+\end_inset
+
+ into a nonsingular matrix 
+\begin_inset Formula $\boldsymbol{C}\subset\mathbb{R}^{3\times3}$
+\end_inset
+
+ and a vector, where 
+\begin_inset Formula $\boldsymbol{c}_{4}=-\boldsymbol{Mc}$
+\end_inset
+
+and 
+\begin_inset Formula $\boldsymbol{c}$
+\end_inset
+
+ is the world origin in the camera.
+ 
+\begin_inset Formula $\boldsymbol{c}=-\boldsymbol{M}^{-1}\boldsymbol{c}_{4}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- The null space of 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ is 
+\begin_inset Formula $\tilde{\boldsymbol{c}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- A pixel at coordinate p corresponds to a ray in space parallel to the
+ vector 
+\begin_inset Formula $\boldsymbol{M}^{−1}\tilde{\boldsymbol{p}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- The matrix 
+\begin_inset Formula $\boldsymbol{M}=\boldsymbol{K}\boldsymbol{R}$
+\end_inset
+
+ is the product of the camera intrinsics and the camera inverse orientation.
+ We can perform an RQ- decomposition of 
+\begin_inset Formula $\boldsymbol{M}=\boldsymbol{R}\boldsymbol{Q}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{R}$
+\end_inset
+
+ is an upper-triangular matrix (which is 
+\begin_inset Formula $\boldsymbol{K}$
+\end_inset
+
+) and an orthogonal matrix 
+\begin_inset Formula $\boldsymbol{Q}$
+\end_inset
+
+ (which is 
+\begin_inset Formula $\boldsymbol{R}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- The bottom row of 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ defines the principal plane, which is parallel to the image plane and contains
+ the camera origin.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+- If the rows of 
+\begin_inset Formula $\boldsymbol{M}$
+\end_inset
+
+ are vectors 
+\begin_inset Formula $\boldsymbol{m}_{i}$
+\end_inset
+
+ then
+\end_layout
+
+\begin_layout Standard
+
+\emph on
++ 
+\begin_inset Formula $\boldsymbol{m}_{3}^{T}$
+\end_inset
+
+ is a vector normal to the principal plane and parallel to the optical axis
+ and 
+\begin_inset Formula $\boldsymbol{M}\boldsymbol{m_{3}^{T}}$
+\end_inset
+
+ is the principal point in homogeneous form.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
++ If the camera has zero skew, that is 
+\begin_inset Formula $\boldsymbol{K}_{1,2}=0$
+\end_inset
+
+, then
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $(\boldsymbol{m}_{1}\times\boldsymbol{m}_{3})\bullet(\boldsymbol{m}_{2}\times\boldsymbol{m}_{3})=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
++ And, if the camera has square pixels, that is 
+\begin_inset Formula $\rho_{u}=\rho_{v}$
+\end_inset
+
+ then
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\left\Vert \boldsymbol{m}_{1}\times\boldsymbol{m}_{3}\right\Vert =\left\Vert \boldsymbol{m}_{2}\times\boldsymbol{m}_{3}\right\Vert =f/\rho$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+——————–
+\end_layout
+
+\begin_layout Standard
++ The field of view of a camera is a function of its focal length 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ In the horizontal direction the half-angle of view is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\theta_{h}/2=\tan^{-1}\left(W/2.\rho_{w}/f\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where W is the number of pixels in the horizontal direction.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\theta_{h}=2\tan^{-1}\left(W\rho_{w}/2f\right);\theta_{v}=2\tan^{-1}\left(H\rho_{h}/2f\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ We note that the field of view is also a function of the dimensions of
+ the camera chip which is 
+\begin_inset Formula $W\rho_{w}\times H\rho_{h}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.1.5.
+ Projecting Points
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.1.6.
+ Lens Distortion
+\end_layout
+
+\begin_layout Standard
++ No lenses are perfect and the low-cost lenses used in many webcams are
+ far from perfect.
+ Lens imperfections result in a variety of distortions including chromatic
+ aberration (color fringing), spherical aberration or astigmatism (variation
+ in focus across the scene), and geometric distortions.
+\end_layout
+
+\begin_layout Standard
++ Geometric distortion is generally the most problematic effect that we
+ encounter for robotic applications, and comprises two components: radial
+ and tangential.
+ Radial distortion causes image points to be translated along radial lines
+ from the principal point.
+ The radial error is well approximated by a polynomial:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\delta r=k_{1}r^{3}+k_{2}r^{5}+k_{3}r^{7}+...$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $r$
+\end_inset
+
+ is the distance of the image point from the principal point.
+\end_layout
+
+\begin_layout Standard
++ The coordinate of the point 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ after distortion is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u^{d}=u+\delta_{u},v^{d}=v+\delta_{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the displacement is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+\delta_{u}\\
+\delta_{v}
+\end{array}\right)=\left(\begin{array}{c}
+u\left(k_{1}r^{2}+k_{2}r^{4}+k_{3}r^{6}+...\right)\\
+v\left(k_{1}r^{2}+k_{2}r^{4}+k_{3}r^{6}+...\right)
+\end{array}\right)+\left(\begin{array}{c}
+2p_{1}uv+p_{2}\left(r^{2}+2u^{2}\right)\\
+p_{1}\left(r^{2}+2v^{2}\right)+2p_{2}uv
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The vectors indicate the displacement required to correct the distortion
+ at different points in the image, in fact 
+\begin_inset Formula $(−\delta_{u},−\delta_{v})$
+\end_inset
+
+, and shows dominant radial distortion.
+\end_layout
+
+\begin_layout Standard
++ In practice three coeffi cients are sufficient to describe the radial
+ distortion and the distortion model is parameterized by 
+\begin_inset Formula $(k_{1},k_{2},k_{3},p_{1},p_{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.2.
+ Camera Calibration
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.2.1.
+ Homogeneous Transformation Approach
+\end_layout
+
+\begin_layout Standard
++ The homogeneous transform method allows direct estimation of the camera
+ matrix 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Setting 
+\begin_inset Formula $\tilde{\boldsymbol{p}}=\left(u,v,1\right)$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+C_{11}X+C_{12}Y+C_{13}Z+C_{14}-C_{31}uX-C_{32}uY-C_{33}uZ-C_{34}u=0\\
+C_{21}X+C_{22}Y+C_{23}Z+C_{24}-C_{31}vX-C_{32}vY-C_{33}vZ-C_{34}v=0
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\left(u,v\right)$
+\end_inset
+
+ are the pixel coordinates corresponding to the world point 
+\begin_inset Formula $\left(X,Y,Z\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{ij}$
+\end_inset
+
+ are elements of the unknown camera matrix.
+\end_layout
+
+\begin_layout Standard
++ Calibration requires a 3-dimensional target shown in Fig 11.6
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_6.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.6
+\end_layout
+
+\begin_layout Standard
++ The position of the center of each marker 
+\begin_inset Formula $\left(X_{i},Y_{i},Z_{i}\right),i\in\left[1,N\right]$
+\end_inset
+
+ with respect to the target frame {T} must be known, but {T} itself is not
+ known.
+ An image is captured and the corresponding image-plane coordinates 
+\begin_inset Formula $(u_{i},v_{i})$
+\end_inset
+
+ are determined.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.2.2.
+ Decomposing the Camera Calibraton Matrix
+\end_layout
+
+\begin_layout Standard
++ The elements of the camera matrix are functions of the intrinsic and extrinsic
+ parameters.
+ However given a camera matrix most of the parameter values can be recovered.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.2.3.
+ Pose Estimation
+\end_layout
+
+\begin_layout Standard
++ The pose estimation problem is to determine the pose 
+\begin_inset Formula $\xi_{T}^{C}$
+\end_inset
+
+ of a target’s coordinate frame {T} with respect to the camera.
+ The geometry of the target is known, that is, we know the position of a
+ number of points 
+\begin_inset Formula $(X_{i},Y_{i},Z_{i}),i\in[1,N]$
+\end_inset
+
+ on the target with respect to {T}.
+ The camera’s intrinsic parameters are also known.
+ An image is captured and the corresponding image-plane coordinates 
+\begin_inset Formula $(u_{i},v_{i})$
+\end_inset
+
+ are determined using computer vision algorithms.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.3.
+ Wide Field-of View Imaging
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.3.1.
+ Fisheye Lens Camera
+\end_layout
+
+\begin_layout Standard
++ A model using the notation shown in Fig.
+ 11.7, where the camera is positioned at the origin 
+\begin_inset Formula $\boldsymbol{O}$
+\end_inset
+
+ and its optical axis is the z-axis.
+ The world point 
+\begin_inset Formula $\boldsymbol{P}$
+\end_inset
+
+is represented in spherical coordinates 
+\begin_inset Formula $(R,\theta,\phi)$
+\end_inset
+
+, where 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is the angle outward from the optical axis and 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is the angle of rotation around the optical axis.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_7.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.7
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $R=\sqrt{X^{2}+Y^{2}+Z^{2}},\theta=\cos^{-1}R/Z,\phi=\tan^{-1}Y/X$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ On the image plane of the camera we represent the projection 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+ in polar coordinates 
+\begin_inset Formula $(r,\phi)$
+\end_inset
+
+ with respect to the principal point, where 
+\begin_inset Formula $r=r(\theta)$
+\end_inset
+
+.
+ The Cartesian imageplane coordinates are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u=r(\theta)\cos\phi,v=r(\theta)\sin\phi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the exact nature of the function 
+\begin_inset Formula $r(\theta)$
+\end_inset
+
+ depends on the type of fisheye lens.
+ Some common projection models are listed in Table 11.1 and all have a scaling
+ parameter 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename table_1.png
+	lyxscale 90
+
+\end_inset
+
+Table 11.1
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.3.2.
+ Catadioptric Camera
+\end_layout
+
+\begin_layout Standard
++ A catadioptric imaging system comprises both reflective and refractive
+ elements, a mirror and a lens, shown in Fig 11.8
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_8.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.8
+\end_layout
+
+\begin_layout Standard
++ A ray is constructed from the point 
+\begin_inset Formula $\boldsymbol{P}$
+\end_inset
+
+ to the focal point of the mirror at 
+\begin_inset Formula $\boldsymbol{O}$
+\end_inset
+
+ which is the origin of the camera system.
+ The ray has an elevation angle of
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\theta=\tan^{-1}\frac{Z}{X^{2}+Y^{2}}+\frac{\pi}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+upward from the optical axis and intersects the mirror at the point 
+\begin_inset Formula $\boldsymbol{M}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
++ The reflected ray makes an angle 
+\begin_inset Formula $\psi$
+\end_inset
+
+ with respect to the optical axis which is a function of the incoming ray
+ angle, that is 
+\begin_inset Formula $\psi(\theta)$
+\end_inset
+
+.
+ The relationship between 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $\psi$
+\end_inset
+
+ is determined by the tangent to the mirror at the point 
+\begin_inset Formula $\boldsymbol{M}$
+\end_inset
+
+ and is a function of the shape of the mirror.
+ Many different mirror shapes are used for catadioptric imaging including
+ spherical, parabolic, elliptical and hyberbolic.
+ In general the function 
+\begin_inset Formula $\psi(\theta)$
+\end_inset
+
+ is nonlinear but an interesting class of mirror is the equiangular mirror
+ for which
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\theta=\alpha\psi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The reflected ray enters the camera lens at angle 
+\begin_inset Formula $\psi$
+\end_inset
+
+ from the optical axis, and from the lens geometry we can write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t=\lambda\tan\psi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is the distance from the principal point.
+ 
+\end_layout
+
+\begin_layout Standard
++ The polar coordinate of the image-plane point is 
+\begin_inset Formula $\boldsymbol{p}=(r,\phi)$
+\end_inset
+
+ and the corresponding Cartesian coordinate is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u=r\cos\phi,v=r\sin\phi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is the azimuth angle
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\phi=\tan^{-1}Y/X$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_9.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.9
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.3.3.
+ Spherical Camera
+\end_layout
+
+\begin_layout Standard
++ The world point 
+\series bold
+P
+\series default
+ is projected by a ray to the origin of a unit sphere.
+ The projection is the point 
+\series bold
+p
+\series default
+ where the ray intersects the surface of the sphere.
+ If we write 
+\begin_inset Formula $\boldsymbol{p}=(x,y,z)$
+\end_inset
+
+ then:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x=\frac{X}{R},y=\frac{Y}{R},z=\frac{Z}{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $R=\sqrt{X^{2}+Y^{2}+Z^{2}}$
+\end_inset
+
+ is the radial distance to the world point
+\end_layout
+
+\begin_layout Standard
++ The surface of the sphere is defined by 
+\begin_inset Formula $x^{2}+y^{2}+z^{2}=1$
+\end_inset
+
+ so one of the three Cartesian coordifnates is redundant.
+\end_layout
+
+\begin_layout Standard
++ A minimal two-parameter representation for a point on the surface of a
+ sphere 
+\begin_inset Formula $(\phi,\theta)$
+\end_inset
+
+ comprises the angle of colatitude measured down from the North pole
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\theta=\sin^{-1}r,\theta\in[0,\pi]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $r=\sqrt{x^{2}+y^{2}}$
+\end_inset
+
+, and the azimuth angle (or longitude)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\phi=\tan^{-1}\frac{y}{x},\phi\in[-\pi,\pi]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Conversely, the Cartesian coordinates for the point 
+\begin_inset Formula $\boldsymbol{p}=(\phi,\theta)$
+\end_inset
+
+ are given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x=\sin\theta\cos\phi,y=\sin\theta\cos\phi,z=\cos\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_10.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.10
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.4.
+ Unified Imaging
+\end_layout
+
+\begin_layout Standard
++ The unified imaging model is a two-step process and the notation is shown
+ in Fig.
+ 11.11.
+\end_layout
+
+\begin_layout Standard
+- The first step is spherical projection of the world point 
+\series bold
+
+\begin_inset Formula $\boldsymbol{P}$
+\end_inset
+
+
+\series default
+ to the surface of the unit sphere 
+\series bold
+
+\begin_inset Formula $\boldsymbol{p′}$
+\end_inset
+
+
+\series default
+ as discussed in the previous section
+\end_layout
+
+\begin_layout Standard
+- In the second step the point 
+\begin_inset Formula $\boldsymbol{p′}=(\theta,\phi)$
+\end_inset
+
+ is reprojected to the image plane 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+ using the view point 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ which is at a distance 
+\begin_inset Formula $l$
+\end_inset
+
+ along the z-axis above 
+\begin_inset Formula $\boldsymbol{O}$
+\end_inset
+
+.
+ The polar coordinates of the image-plane point are 
+\begin_inset Formula $\boldsymbol{p}=(r,\phi)$
+\end_inset
+
+ where
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $r=\frac{(l+m)\sin\theta}{l-\cos\theta}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_11.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 11.11
+\end_layout
+
+\begin_layout Standard
++ The unified imaging model has only two parameters 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $l$
+\end_inset
+
+ and these are a function of the type of camera as listed in Table 11.2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename table_2.png
+	lyxscale 65
+
+\end_inset
+
+ Table 11.2
+\end_layout
+
+\begin_layout Standard
++ The projection with 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ at the north pole is known as stereographic projection and is used in many
+ fi elds to project the surface of a sphere onto a plane.
+ Many fisheye lenses are extremely well approximated by 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ above the north pole.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.4.1.
+ Mapping Wide-Angle Images to the Sphere
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+11.4.2.
+ Mapping from the Sphere to a Perspective Image
+\end_layout
+
+\begin_layout Standard
++ The field of view can be written in terms of the image width 
+\begin_inset Formula $W$
+\end_inset
+
+ and the unified imaging parameter 
+\begin_inset Formula $m$
+\end_inset
+
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\theta_{FOV}=2\tan^{-1}\frac{W}{2m}$
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
