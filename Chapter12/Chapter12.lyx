@@ -1,0 +1,1110 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\series bold
+Chapter 12.
+ Images and Image Processing
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.
+ Obtaining an Image
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.1.
+ Images from Files
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_1.png
+	lyxscale 60
+
+\end_inset
+
+ Fig 12.1
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.2.
+ Images from an Attached Camera
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.3.
+ Images from a Movie File
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.4.
+ Images from the Web
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.5.
+ Images from the Maps
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.1.6.
+ Images from Code
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.2.
+ Image Histograms
+\end_layout
+
+\begin_layout Standard
++ The distribution of pixel values provides useful information about the
+ quality of the image and the composition of the scene.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_2.png
+	lyxscale 50
+
+\end_inset
+
+ Fig 12.2
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.3.
+ Monadic Operations
+\end_layout
+
+\begin_layout Standard
++ Monadic image-processing operations are shown schematically in Fig.
+ 12.3.
+ The result is an image of the same size W × H as the input image, and each
+ output pixel is a function of the corresponding input pixel
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=f(\boldsymbol{I}[u,v]),\forall(u,v)\in\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_3.png
+	lyxscale 65
+
+\end_inset
+
+ Fig 12.3
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.4.
+ Diadic Operations
+\end_layout
+
+\begin_layout Standard
++ Diadic operations are shown schematically in Fig.
+ 12.4.
+ Two input images result in a single output image, and all three images
+ are of the same size.
+ Each output pixel is a function of the corresponding pixels in the two
+ input images
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=f(\boldsymbol{I}_{1}[u,v],\boldsymbol{I}_{2}[u,v]),\forall(u,v)\in\boldsymbol{I}_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_4.png
+	lyxscale 50
+
+\end_inset
+
+ Fig 12.4
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.
+ Spatial Operations
+\end_layout
+
+\begin_layout Standard
+Spatial operations are shown schematically in Fig.
+ 12.5.
+ Each pixel in the output image is a function of all pixels in a region
+ surrounding the corresponding pixel in the input image
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=f(\boldsymbol{I}[u+i,v+j]),\forall(i,j)\in W,\forall(u,v)\in I$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_5.png
+	lyxscale 60
+
+\end_inset
+
+ Fig 12.5
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $W$
+\end_inset
+
+ is known as the window, typically a 
+\begin_inset Formula $w\times w$
+\end_inset
+
+ square region with odd side length 
+\begin_inset Formula $w=2h+1$
+\end_inset
+
+ where 
+\begin_inset Formula $h\in\mathbb{Z}^{+}$
+\end_inset
+
+ is the half-width.
+\end_layout
+
+\begin_layout Standard
++ Spatial operations are powerful because of the variety of possible functions
+ 
+\begin_inset Formula $f(.)$
+\end_inset
+
+, linear or nonlinear, that can be applied.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.1.
+ Linear Spatial Filtering
+\end_layout
+
+\begin_layout Standard
++ A very important linear spatial oprator is correlation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=\sum_{(i,j)\in W}\boldsymbol{I}[u+i,v+j]\boldsymbol{K}[i,j],\forall(u,v)\in\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{K}\in\mathbb{R}^{w\times w}$
+\end_inset
+
+ is the kernel and the elements are referred to as the filter coefficients
+\end_layout
+
+\begin_layout Standard
++ Correlation is often written in operator form as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}=\boldsymbol{K}\otimes\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ A closely related operation is convolution
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=\sum_{(i,j)\in W}\boldsymbol{I}[u-i,v-j]\boldsymbol{K}[i,j],\forall(u,v)\in\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{K}\in\mathbb{R}^{w\times w}$
+\end_inset
+
+ is the convolution kernel
+\end_layout
+
+\begin_layout Standard
++ Convolution is often written in operator form as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}=\boldsymbol{K}\ast\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.1.1.
+ Smoothing
+\end_layout
+
+\begin_layout Standard
++ A more suitable kernel for smoothing is the 2-dimensional Gaussian function
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{G}(u,v)=\frac{1}{2\pi\sigma^{2}}e^{-\frac{u^{2}+v^{2}}{2\sigma^{2}}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is symmetric about the origin and the volume under the curve is unity.
+ The spread of the Gaussian is controlled by the standard deviation parameter
+ 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.1.2.
+ Boundary Effects
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.1.3.
+ Edge Detection
+\end_layout
+
+\begin_layout Standard
++ The first-order derivative along thi cross-section is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p'[v]=p[v]-p[v-1]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_6.png
+	lyxscale 65
+
+\end_inset
+
+ Fig 12.6
+\end_layout
+
+\begin_layout Standard
++ The derivative at point v can also be written as a symmetrical first-order
+ difference
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p'[v]=\frac{1}{2}(p[v+1]-p[v-1])$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is equivalent to convolution with the 1-dimensional kernel
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{K}=\left(\begin{array}{ccc}
+0.5 & 0 & -0.5\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The notation used for gradients varies considerably in the literature.
+ Most commonly the horizontal and vertical gradient are denoted respectively
+ as 
+\begin_inset Formula $\partial\boldsymbol{I}/\partial u,\partial\boldsymbol{I}/\partial v,\nabla_{u}\boldsymbol{I},\nabla_{v}\boldsymbol{I},\boldsymbol{I}_{u},\boldsymbol{I}_{v}$
+\end_inset
+
+ .In operator form this is written
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\boldsymbol{I}_{u}=\boldsymbol{D}\ast\boldsymbol{I}\\
+\boldsymbol{I}_{v}=\boldsymbol{D}^{T}\ast\boldsymbol{I}
+\end{array}$
+\end_inset
+
+ where 
+\begin_inset Formula $\boldsymbol{D}$
+\end_inset
+
+is a derivative kernel such as Sobel
+\end_layout
+
+\begin_layout Standard
++ We can reduce the effect of noise by smoothing the image before taking
+ the derivative
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{I}_{u}=\boldsymbol{D}\ast\left(\boldsymbol{G}(\sigma)\ast\boldsymbol{I}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Instead of convolving the image with the Gaussian and then the derivative,
+ we exploit the associative property of convolution to write (DoG)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{I}_{u}=\boldsymbol{D}\ast\left(\boldsymbol{G}(\sigma)\ast I\right)=\left(\boldsymbol{D}\ast\boldsymbol{G}(\sigma)\right)\ast I$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ The Laplacian operator:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\nabla^{2}\boldsymbol{I}=\frac{\partial^{2}\boldsymbol{I}}{\partial u^{2}}+\frac{\partial^{2}\boldsymbol{I}}{\partial v^{2}}=\boldsymbol{I}_{uu}+\boldsymbol{I}_{vv}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+is the sum of the second spatial derivative in the horizontal and vertical
+ directions
+\end_layout
+
+\begin_layout Standard
++ The second derivative is even more sensitive to noise than the first derivativ
+e and is again commonly used in conjunction with a Gaussian smoothed image
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\nabla^{2}\boldsymbol{I}=\boldsymbol{L}\ast\left(\boldsymbol{G}(\sigma)\ast\boldsymbol{I}\right)=\left(\boldsymbol{L}\ast\boldsymbol{G}(\sigma)\right)\ast\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which we combine into the Laplacian of Gaussian kernel (LoG), and 
+\begin_inset Formula $\boldsymbol{L}$
+\end_inset
+
+ is the Laplacian kernel given above.
+ 
+\end_layout
+
+\begin_layout Standard
++ This can be written analytically as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{LOG}(u,v)=\frac{\partial^{2}\boldsymbol{G}}{\partial u^{2}}+\frac{\partial^{2}\boldsymbol{G}}{\partial v^{2}}=\frac{1}{\pi\sigma^{4}}\left(\frac{u^{2}+v^{2}}{2\sigma^{2}}-1\right)e^{-\frac{u^{2}+v^{2}}{2\sigma^{2}}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is known as the Marr-Hildreth operator or the 
+\emph on
+Mexican hat kernel
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.2.
+ Template Matching
+\end_layout
+
+\begin_layout Standard
++ In template matching we find which parts of the input image are most similar
+ to the template.
+\end_layout
+
+\begin_layout Standard
++ Template matching is shown schematically in Fig.
+ 12.7.
+ Each pixel in the output image is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=s(\boldsymbol{T},W),\forall(u,v)\in\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\boldsymbol{T}$
+\end_inset
+
+ is the 
+\begin_inset Formula $w\times w$
+\end_inset
+
+ template, the pattern of pixels we are looking for, with odd side length
+ 
+\begin_inset Formula $w=2h+1$
+\end_inset
+
+, and 
+\begin_inset Formula $W$
+\end_inset
+
+ is the 
+\begin_inset Formula $w\times w$
+\end_inset
+
+ window centered at 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ in the input image.
+ The function 
+\begin_inset Formula $s(\boldsymbol{I}_{1},\boldsymbol{I}_{2})$
+\end_inset
+
+ is a scalar measure that describes the similarity of two equally sized
+ images 
+\begin_inset Formula $\boldsymbol{I}_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{I}_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_7.png
+	lyxscale 70
+
+\end_inset
+
+ Fig 12.7
+\end_layout
+
+\begin_layout Standard
++ A number of common similarity measures are given in Table 12.1.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename table_1.png
+	lyxscale 78
+
+\end_inset
+
+ Table 12.1
+\end_layout
+
+\begin_layout Standard
++ It is not easy to say what value of the measure constitutes a poor match
+ but a ranking of similarity measures can be used to determine the best
+ match.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.2.1.
+ Nonparameteric Local Transform
+\end_layout
+
+\begin_layout Standard
+Nonparametric similarity measures are more robust to the mixed pixel problem
+ and we can apply a local transform to the image and template before matching.
+ Two common transforms from this class are the census transform and the
+ rank transform
+\end_layout
+
+\begin_layout Standard
++ The census transform maps pixel values from a local region to an integer
+ considered as a bit string-each bit corresponds to one pixel in the region
+ as shown in Fig.
+ 12.8.
+ If a pixel is greater than the center pixel its corresponding bit is set
+ to one, else it is zero.
+ For a 
+\begin_inset Formula $w\times w$
+\end_inset
+
+ window the string will be 
+\begin_inset Formula $w^{2}−1$
+\end_inset
+
+ bits long.
+ The two bit strings are compared using a Hamming distance which is the
+ number of bits that are different
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_8.png
+	lyxscale 75
+
+\end_inset
+
+ Fig 12.8
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.5.3.
+ Nonlinear Operations
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.6.
+ Mathematical Morphology
+\end_layout
+
+\begin_layout Standard
+Mathematical morphology is a class of nonlinear spatial operators shown
+ schematically in Fig.
+ 12.9.
+ Each pixel in the output matrix is a function of a subset of pixels in
+ a region surrounding the corresponding pixel in the input image
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}[u,v]=f\left(\boldsymbol{I}[u+i,v+j]\right),\forall(i,j)\in S,\forall(u,v)\in\boldsymbol{I}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $S$
+\end_inset
+
+ is the structuring element, an arbitrary small binary image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_9.png
+	lyxscale 60
+
+\end_inset
+
+Fig 12.9
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_10.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 12.10
+\end_layout
+
+\begin_layout Standard
++ Morphological operations are often written in operator form.
+ Erosion is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}=\boldsymbol{I}\ominus S$
+\end_inset
+
+ where 
+\begin_inset Formula $f(.)=\min(.)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and dilation is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{O}=\boldsymbol{I}\oplus S$
+\end_inset
+
+ where 
+\begin_inset Formula $f(.)=\max(.)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Erosion and dilation are related by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A\oplus B=\overline{\overline{A}\ominus B'}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the bar denotes the logical complement of the pixel values, and the
+ prime denotes reflection about the center pixel.
+ 
+\end_layout
+
+\begin_layout Standard
++ For morphological operations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\left(A\oplus S_{1}\right)\oplus S_{2}=A\oplus\left(S_{1}+S_{2}\right)\\
+\left(A\ominus S_{1}\right)\ominus S_{2}=A\ominus\left(S_{1}+S_{2}\right)
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which means that successive erosion or dilation with a structuring element
+ is equivalent to the application of a single larger structuring element,
+ but the former is computationally cheaper.
+\end_layout
+
+\begin_layout Standard
++ The sequence of operations, erosion then dilation, is known as opening
+ since it opens up gaps.
+ In operator form it is written as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{I}\circ\boldsymbol{S}=\left(\boldsymbol{I}\ominus\boldsymbol{S}\right)\oplus\boldsymbol{S}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_11.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 12.11
+\end_layout
+
+\begin_layout Standard
++ This sequence of operations is referred to as closing since it closes
+ gaps and is written in operator form as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\boldsymbol{I}\bullet\boldsymbol{S}=\left(\boldsymbol{I}\oplus\boldsymbol{S}\right)\ominus\boldsymbol{S}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++ Unlike erosion and dilation repeated application of opening or closing
+ is futile since those operations are idempotent
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{c}
+\left(\boldsymbol{I}\circ\boldsymbol{S}\right)\circ\boldsymbol{S}=\boldsymbol{I}\circ\boldsymbol{S}\\
+\left(\boldsymbol{I}\bullet\boldsymbol{S}\right)\bullet\boldsymbol{S}=\boldsymbol{I}\bullet\boldsymbol{S}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.6.1.
+ Noise Removal
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_12.png
+	lyxscale 80
+
+\end_inset
+
+ Fig 12.12
+\end_layout
+
+\begin_layout Standard
+Origin -> Openning -> Closing
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.6.2.
+ Boudary Detection
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_13.png
+	lyxscale 60
+
+\end_inset
+
+ Fig 12.13
+\end_layout
+
+\begin_layout Standard
+Origin -> Closing -> Boundary = Origin - Closing
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.6.3.
+ Hit or Miss Transform
+\end_layout
+
+\begin_layout Standard
++ The hit or miss transform uses a variation on the morphological structuring
+ element.
+ Its values are 
+\emph on
+zero
+\emph default
+, 
+\emph on
+one
+\emph default
+ or 
+\emph on
+don’t care
+\emph default
+ as shown in Fig.
+ 12.14a.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename example_14.png
+	lyxscale 60
+
+\end_inset
+
+ Fig 12.14
+\end_layout
+
+\begin_layout Standard
++ The zero and one pixels must exactly match the underlying image pixels
+ in order for the result to be a one, as shown in Fig.
+ 12.14b.
+ If there is any mismatch of a one or zero as shown in Fig.
+ 12.14c then the result will be zero.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.6.4.
+ Distance Transform
+\end_layout
+
+\begin_layout Standard
++ The distance transform operates on a binary image and the output value,
+ corresponding to every zero pixel in the input image, is the Euclidean
+ distance to the nearest nonzero pixel.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.7.
+ Shape Changing
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.7.1.
+ Cropping
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.7.2.
+ Image Resizing
+\end_layout
+
+\begin_layout Standard
++ The simplest means to reduce image size is subsampling or decimation which
+ selects every 
+\begin_inset Formula $m^{th}$
+\end_inset
+
+ pixel in the u- and v-direction, where 
+\begin_inset Formula $m\in Z^{+}$
+\end_inset
+
+ is the subsampling factor.
+ For example with 
+\begin_inset Formula $m=2$
+\end_inset
+
+ an 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ image becomes an 
+\begin_inset Formula $N/2\times N/2$
+\end_inset
+
+ images which has one quarter the number of pixels of the original image.
+\end_layout
+
+\begin_layout Standard
++ The second argument is the scale factor and if 
+\begin_inset Formula $m<1$
+\end_inset
+
+ the image will be reduced, and if 
+\begin_inset Formula $m>1$
+\end_inset
+
+ it will be expanded.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.7.3.
+ Image Pytamids
+\end_layout
+
+\begin_layout Standard
++ An important concept in computer vision, and one that we return to in
+ the next chapter is scale space.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+12.7.4.
+ Image Warping
+\end_layout
+
+\begin_layout Standard
++ Image warping is a transformation of the pixel coordinates rather than
+ the pixel values.
+ Warping can be used to scale an image up or down in size, rotate an image
+ or apply quite arbitrary shape changes.
+ The coordinates of a pixel in the new view 
+\begin_inset Formula $(u′,v′)$
+\end_inset
+
+ are expressed as functions
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u'=f_{u}(u,v),v'=f_{v}(u,v)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+of the coordinates in the original view.
+\end_layout
+
+\begin_layout Standard
++ We want to rotate the image about its center but since the origin of the
+ input image is the top-left corner we must fi rst change the origin to
+ the center, then rotate and then move the origin back to the top-left corner.
+ The warp equation is therefore
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(\begin{array}{c}
+u'\\
+v'
+\end{array}\right)=\left(\begin{array}{cc}
+\cos\pi/6 & -\sin\pi/6\\
+\sin\pi/6 & \cos\pi/6
+\end{array}\right)\left(\begin{array}{c}
+u-u_{c}\\
+v-v_{c}
+\end{array}\right)+\left(\begin{array}{c}
+u_{c}\\
+v_{c}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $(u_{c},v_{c})$
+\end_inset
+
+is the coordinate of the image center and 
+\begin_inset Formula $\boldsymbol{R}(\pi/6)$
+\end_inset
+
+ is a rotation matrix in 
+\begin_inset Formula $\boldsymbol{SE}(2)$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document
